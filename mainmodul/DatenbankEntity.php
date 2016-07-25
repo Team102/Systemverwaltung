@@ -8,25 +8,7 @@
  */
 abstract class DatenbankEntity
 {
-
-    private $serverUrl = "http://serverUrl.com";
     private $error;
-    public $dbConnection;
-    /**
-     * Verbindet sich mit der Datenbank und wählt die Datenbank itv aus
-     * @param $user User Objekt
-     * @return mixed int bei Erfolg String bei Misserfolg
-     */
-    function dbConnect($user){
-        $this->dbConnection = mysqli_connect($this->serverUrl, $user->username, $user->password);
-        if(is_null($this->dbConnection)){
-            return "Es konnte keine Verbindung hergestellt werden Grund: " . mysqli_connect_error();
-        }
-        if(!mysqli_select_db($this->dbConnection, "itv")){
-            return "Die Datenbank 'itv' konnte nicht ausgewählt werden!";
-        }
-        return 0;
-    }
 
     /**
      * Fügt dieses Objekt in die Datenbank
@@ -46,29 +28,6 @@ abstract class DatenbankEntity
      * @return mixed
      */
     abstract function db_delete();
-
-    /**
-     * returnt das query
-     * @param $query string der Query oder null für alles
-     * @return mixed das ergebnis
-     */
-    abstract function db_select($query);
-
-    /**
-     * Schließt die Datenbank, falls eine geöffnete Verbindung vorhanden ist.
-     */
-    function dbClose(){
-        if(!is_null($this->dbConnection)){
-            mysqli_close($this->dbConnection);
-        }
-    }
-
-    /**
-     * @return bool if connected  or not
-     */
-    function isConnected(){
-        return !is_null($this->dbConnection);
-    }
 
 
     /**
