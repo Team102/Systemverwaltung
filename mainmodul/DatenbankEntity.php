@@ -10,7 +10,8 @@ abstract class DatenbankEntity
 {
 
     private $serverUrl = "http://serverUrl.com";
-    private $dbConnection;
+    private $error;
+    public $dbConnection;
     /**
      * Verbindet sich mit der Datenbank
      * @param $user User Objekt
@@ -44,11 +45,41 @@ abstract class DatenbankEntity
     abstract function db_delete();
 
     /**
+     * returnt das query
+     * @param $query string der Query oder null für alles
+     * @return mixed das ergebnis
+     */
+    abstract function db_select($query);
+
+    /**
      * Schließt die Datenbank, falls eine geöffnete Verbindung vorhanden ist.
      */
     function dbClose(){
         if(!is_null($this->dbConnection)){
             mysqli_close($this->dbConnection);
         }
+    }
+
+    /**
+     * @return bool if connected  or not
+     */
+    function isConnected(){
+        return !is_null($this->dbConnection);
+    }
+
+
+    /**
+     * setzt den error
+     * @param $error mixed to set
+     */
+    function setError($error){
+        $this->error = $error;
+    }
+
+    /**
+     * @return mixed return von dem error
+     */
+    function getError(){
+        return $this->error;
     }
 }
