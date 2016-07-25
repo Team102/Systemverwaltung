@@ -37,4 +37,17 @@ class Lieferant extends DatenbankEntity
     {
         // TODO: Implement db_delete() method.
     }
+
+    /**
+     * returnt das query
+     * @param $query string der Query oder null für alles
+     * @return mixed das ergebnis
+     */
+    function db_select($query)
+    {
+
+        if(is_null($query)){
+
+        }
+    }
 }

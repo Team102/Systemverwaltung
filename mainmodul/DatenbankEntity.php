@@ -13,7 +13,7 @@ abstract class DatenbankEntity
     private $error;
     public $dbConnection;
     /**
-     * Verbindet sich mit der Datenbank
+     * Verbindet sich mit der Datenbank und wählt die Datenbank itv aus
      * @param $user User Objekt
      * @return mixed int bei Erfolg String bei Misserfolg
      */
@@ -21,6 +21,9 @@ abstract class DatenbankEntity
         $this->dbConnection = mysqli_connect($this->serverUrl, $user->username, $user->password);
         if(is_null($this->dbConnection)){
             return "Es konnte keine Verbindung hergestellt werden Grund: " . mysqli_connect_error();
+        }
+        if(!mysqli_select_db($this->dbConnection, "itv")){
+            return "Die Datenbank 'itv' konnte nicht ausgewählt werden!";
         }
         return 0;
     }
