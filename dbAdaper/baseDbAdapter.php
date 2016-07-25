@@ -13,11 +13,15 @@ class baseDbAdapter
     private $dbConnection;
     private $serverUrl = "http://serverUrl.com";
     private $error;
-    
+    private $user;
+
+    function __construct($user) {
+        $this->user = $user;
+    }
     
     function dbConnect(){
         
-        $this->dbConnection = new PDO("mysql:host=$this->serverUrl;dbname=itv",  $user->username, $user->password);
+        $this->dbConnection = new PDO("mysql:host=$this->serverUrl;dbname=itv",  $this->user->username, $this->user->password);
         if(is_null($this->dbConnection)){
             return "Es konnte keine Verbindung hergestellt werden Grund: " . mysqli_connect_error();
         }
