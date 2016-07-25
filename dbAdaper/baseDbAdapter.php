@@ -53,7 +53,7 @@ class baseDbAdapter
     {
         try
         {
-            $this->dbConnect();
+            $this->dbConnect();och 
             $statement = $this->dbConnection->prepare($query);
             $statement->execute($entrys);
             $result = $statement->fetchAll();
