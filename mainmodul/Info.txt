@@ -1,0 +1,3 @@
+Alle enthaltenen .php Dateien im Package mainmodul enthalten die wichtigsten Funktionen die
+aufgerufen werden können innerhalb vom Frontend. Diese werden entweder direkt ausgeführt oder weitergeleitet
+an andere Module. Weitere Informationen sind in den einzelnen Dateien zu finden.
