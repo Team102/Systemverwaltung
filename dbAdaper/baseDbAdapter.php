@@ -15,9 +15,9 @@ class baseDbAdapter
     private $error;
     
     
-    function dbConnect($user){
+    function dbConnect(){
         
-        $this->dbConnection = new PDO("mysql:host=$serverUrl;dbname=itv",  $user->username, $user->password);
+        $this->dbConnection = new PDO("mysql:host=$this->serverUrl;dbname=itv",  $user->username, $user->password);
         if(is_null($this->dbConnection)){
             return "Es konnte keine Verbindung hergestellt werden Grund: " . mysqli_connect_error();
         }
@@ -28,7 +28,7 @@ class baseDbAdapter
     {
         try
         {
-            dbConnect();
+            $this->dbConnect();
             $statement = $this->dbConnection->prepare($query);
             $statement->execute();
             $result = $statement->fetchAll();
@@ -49,7 +49,7 @@ class baseDbAdapter
     {
         try
         {
-            dbConnect();
+            $this->dbConnect();
             $statement = $this->dbConnection->prepare($query);
             $statement->execute($entrys);
             $result = $statement->fetchAll();
@@ -66,17 +66,17 @@ class baseDbAdapter
     
     function insert($tablename, $parameters)
     {
-        $names;
-        $values;
+        $names = "";
+        $values = "";
         foreach($parameters as $key => $value)
         {
-            $names + " " + $key + ",";
-            $values = " '" + $value + "',";            
+            $names = $names . " " . $key . ",";
+            $values = $values . " '" . $value . "',";
         }
         $names = substr($names, 0, (strlen($names)-1));
         $values = substr($values, 0, (strlen($values)-1));
-        $query = "INSERT INTO " + $tablename + " (" + $names + ") VALUES (" + $values +")";
-        execSQL($query);
+        $query = "INSERT INTO " . $tablename . " (" . $names . ") VALUES (" . $values .")";
+        $this->execSQL($query);
     }
     
     /*
@@ -85,25 +85,25 @@ class baseDbAdapter
     
     function update($tablename, $parameters, $condition = null)
     {
-        $updateValues;
+        $updateValues = "";
         foreach($parameters as $key => $value)
         {
-            $updateValues + $key + " = '" + $value + "',";
+            $updateValues = $updateValues. $key . " = '" . $value . "',";
         }
         $updateValues = substr($updateValues, 0, (strlen($updateValues)-1));
         if($condition == null)
         {
-            $query = "UPDATE " + $tablename + "SET " + $updateValues + "WHERE 1=1 ";
+            $query = "UPDATE " . $tablename . "SET " . $updateValues . "WHERE 1=1 ";
         }
         else
         {
-            $query = "UPDATE " + $tablename + "SET " + $updateValues + "WHERE " + $condition;
+            $query = "UPDATE " . $tablename . "SET " . $updateValues . "WHERE " . $condition;
         }
-        execSQL($query);
+        $this->execSQL($query);
     }
     function delete($tablename, $where)
     {
-        $query = " DELETE FROM " + $tablename + "WHERE " + $where;
-        execQuery($query);
+        $query = " DELETE FROM " . $tablename . "WHERE " . $where;
+        $this->execSQL($query);
     }
 }
