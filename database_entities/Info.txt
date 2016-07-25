@@ -1,0 +1,1 @@
+Dieses Package enthält alle Datenbank entities
