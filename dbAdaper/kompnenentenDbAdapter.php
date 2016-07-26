@@ -12,7 +12,7 @@ class kompnenentenDbAdapter extends baseDbAdapter
         parent::__construct($user);
     }
     
-    function getAllKompnonenten()
+    function getAllKomponenten()
     {
         $kompnenetenList = [];
         $query = "SELECT * FROM komponenten";
@@ -24,12 +24,38 @@ class kompnenentenDbAdapter extends baseDbAdapter
             $komp->setL_ID($result["l_id"]);
             $komp->setR_ID($result["r_id"]);
             $komp->setK_Notitz($result["k_notitz"]);
-            $komp->getK_Geweahrleistungen($result["k_gewaehrleistungen"]);
+            $komp->setK_Geweahrleistungen($result["k_gewaehrleistungen"]);
             $komp->setK_Hersteller($result["k_hersteller"]);
             $komp->getKAR_ID($result["kar_id"]);
             
             $kompnenetenList[] = $komp;
         }
         return $kompnenetenList;
+    }
+    
+    function getKompneneteById($komponente)
+    {
+        
+    }
+    
+    function saveKomponente($kompnenete)
+    {
+        $ID = $kompnenete->getK_ID();
+        $select = "SELECT * FROM komponenten WHERE k_id = " . $ID;
+        $results = $this->execSQL($select);
+        $parameters[] = $kompnenete->getR_ID();
+        $parameters[] = $kompnenete->getL_ID;
+        $parameters[] = $kompnenete->getB_ID();
+        $parameters[] = $kompnenete->getK_Geweahrleistungen();
+        $parameters[] = $kompnenete->getK_Hersteller();
+        $parameters[] = $kompnenete->getKAR_ID();
+        if(count($results) != 0)
+        {           
+            $this->update("komponenten", $parameters, "kar_id = " . $ID);
+        }
+        else
+        {
+            $this->insert("komponenten", $parameters);
+        }
     }
 }

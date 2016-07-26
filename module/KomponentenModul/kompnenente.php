@@ -7,6 +7,7 @@
 
 class komponente
 {
+    private $k_id;
     private $r_id;
     private $l_id;
     private $b_id;
@@ -14,6 +15,16 @@ class komponente
     private $k_notitz;
     private $k_hersteller;
     private $kar_id;
+    
+    public function getK_ID()
+    {
+        return $this->k_id;
+    }
+    
+    public function setK_ID($k_id)
+    {
+        $this->k_id = $k_id;
+    }
     
     public function getR_ID()
     {
