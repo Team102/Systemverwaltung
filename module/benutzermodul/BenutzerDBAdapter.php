@@ -32,7 +32,7 @@ class BenutzerDBAdapter extends baseDbAdapter
 
     /**
      * Holt einen einzigen Benutzer zurück aus der Datenbank.
-     * @param $username der zu suchende Username
+     * @param $username String der zu suchende Username
      * @return Benutzer der gefundene Benutzer wird zurück gegeben.
      */
     function selectBenutzerByName($username){
