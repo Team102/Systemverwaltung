@@ -40,8 +40,7 @@ class baseDbAdapter
         }
         catch (PDOException $ex)
         {
-            echo $ex->getMessage();
-//            $this->$error = $ex->getMessage();
+            $this->$error = $ex->getMessage();
             return -1;
         }
     }
