@@ -14,7 +14,6 @@ class baseDbAdapter
     private $serverUrl = "http://serverUrl.com";
     private $error;
     private $user;
-    private $transact;
 
     function __construct($user) {
         $this->user = $user;
@@ -41,7 +40,7 @@ class baseDbAdapter
         }
         catch (PDOException $ex)
         {
-            $this->$error = $ex->getMessage();
+            $this->error = $ex->getMessage();
             return -1;
         }
     }
