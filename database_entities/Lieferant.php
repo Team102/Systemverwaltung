@@ -17,5 +17,4 @@ class Lieferant
     public $l_mobil;
     public $l_fax;
     public $l_email;
-
 }

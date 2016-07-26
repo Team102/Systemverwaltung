@@ -11,7 +11,7 @@ class baseDbAdapter
 {
     
     private $dbConnection;
-    private $serverUrl = "http://serverUrl.com";
+    private $serverUrl = "local.TEAM102";
     private $error;
     private $user;
 
@@ -46,7 +46,7 @@ class baseDbAdapter
     }
     
     /*
-     * Diese function wird auch als selct verwendet da sie ein array mit key value pairs ausliefert
+     * Diese function wird auch als select verwendet da sie ein array mit key value pairs ausliefert
      */
     
     function execSQLParameters($query, $entrys)
