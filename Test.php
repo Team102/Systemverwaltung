@@ -5,9 +5,10 @@
  * Date: 26.07.2016
  * Time: 10:46
  */
-require("module/Lieferantenmodul/LieferantenDBAdapter.php");
-require("database_entities/Lieferant.php");
-require("database_entities/User.php");
+require_once("module/benutzermodul/BenutzerDBAdapter.php");
+require_once("database_entities/Benutzer.php");
+require_once("database_entities/User.php");
+require_once("module/loginmodul/Login.php");
 ?>
 
 <html>
@@ -21,13 +22,17 @@ require("database_entities/User.php");
     <?php
 
         $user = new User("root", "");
-        $lieferantenDBAdapter = new LieferantenDBAdapter($user);
-        $array = $lieferantenDBAdapter->selectLieferanten();
-        foreach($array as $lieferant) {
-            echo $lieferant->l_id . "<br/>";
-            $lieferant->l_id = 0;
-            $lieferantenDBAdapter->insertLieferant($lieferant);
-        }
+        $benutzerDBAdapter = new BenutzerDBAdapter($user);
+        $login = new Login();
+        echo $login->tryToLogIn("Keeyzar", "King");
+//        $user = new User("root", "");
+//        $lieferantenDBAdapter = new LieferantenDBAdapter($user);
+//        $array = $lieferantenDBAdapter->selectLieferanten();
+//        foreach($array as $lieferant) {
+//            echo $lieferant->l_id . "<br/>";
+//            $lieferant->l_id = 0;
+//            $lieferantenDBAdapter->insertLieferant($lieferant);
+//        }
 
     ?>
     </body>
