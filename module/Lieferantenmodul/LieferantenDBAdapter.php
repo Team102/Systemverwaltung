@@ -6,6 +6,7 @@
  * Date: 25.07.2016
  * Time: 22:19
  */
+require("module/baseDbAdapter.php");
 class LieferantenDBAdapter extends baseDbAdapter
 {
 
@@ -29,22 +30,22 @@ class LieferantenDBAdapter extends baseDbAdapter
         return $lieferantenArray;
     }
 
-    /**
-     * Selektiert Lieferanten anhand der übergebenen Condition
-     */
-    function selectLieferantenByCondition(){
-        $condition;
-        $sql = "SELECT * FROM lieferanten WHERE $condition";
-        $parameter;
-        $alleLieferanten = $this->execSQLParameters($sql, $parameter);
-    }
+//    /**
+//     * Selektiert Lieferanten anhand der übergebenen Condition
+//     */
+//    function selectLieferantenByCondition(){
+//        $condition;
+//        $sql = "SELECT * FROM lieferanten WHERE $condition";
+//        $parameter;
+//        $alleLieferanten = $this->execSQLParameters($sql, $parameter);
+//    }
 
     /**
      * Fügt den Lieferanten hinzu
      * @param $lieferant Lieferant welcher Lieferant hinzugefügt werden soll
      */
     function insertLieferant($lieferant){
-        $this->dbConnect();
+        $this->insert("lieferanten", $lieferant);
     }
 
     /**
@@ -52,7 +53,6 @@ class LieferantenDBAdapter extends baseDbAdapter
      * @param $lieferantenArray array von Lieferanten, die hinzugefügt werden sollen
      */
     function insertLieferanten($lieferantenArray){
-        $this->dbConnect();
         foreach($lieferantenArray as $lieferant){
             $this->insertLieferant($lieferant);
         }
@@ -62,19 +62,8 @@ class LieferantenDBAdapter extends baseDbAdapter
      * @param $lieferant Lieferant welcher Lieferant upgedated werden soll
      */
     function updateLieferant($lieferant){
-        $lieferantParameter = array();
-
-        $lieferantParameter["l_id"] = $lieferant->l_id;
-        $lieferantParameter["l_firmenname"] = $lieferant->l_firmenname;
-        $lieferantParameter["l_strasse"] = $lieferant->l_strasse;
-        $lieferantParameter["l_plz"] = $lieferant->l_plz;
-        $lieferantParameter["l_ort"] = $lieferant->l_ort;
-        $lieferantParameter["l_tel"] = $lieferant->l_tel;
-        $lieferantParameter["l_mobil"] = $lieferant->l_mobil;
-        $lieferantParameter["l_fax"] = $lieferant->l_fax;
-        $lieferantParameter["l_email"] = $lieferant->l_email;
-
-        $this->update("lieferant", $lieferantParameter, "l_id = $lieferant->l_id");
+        unset($lieferant->l_id);
+        $this->update("lieferant", $lieferant, "l_id = $lieferant->l_id");
 
     }
 
@@ -84,7 +73,6 @@ class LieferantenDBAdapter extends baseDbAdapter
      */
     function deleteLieferant($lieferant){
         $this->delete("lieferant", "l_id = $lieferant->l_id");
-        //TODO erfragen wegen message
     }
 
     /**
@@ -105,7 +93,7 @@ class LieferantenDBAdapter extends baseDbAdapter
     private function getLieferantFromAssocArray($row)
     {
         $lieferant = new Lieferant();
-        $lieferant->l_id = $row["id"];
+        $lieferant->l_id = $row["l_id"];
         $lieferant->l_firmenname = $row["l_firmenname"];
         $lieferant->l_strasse = $row["l_strasse"];
         $lieferant->l_plz = $row["l_plz"];
