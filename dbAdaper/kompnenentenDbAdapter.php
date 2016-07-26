@@ -35,7 +35,18 @@ class kompnenentenDbAdapter extends baseDbAdapter
     
     function getKompneneteById($komponente)
     {
-        
+        $query = "SELECT * FROM komponenten WHERE k_id = " . $komponente->getK_ID();
+        $results = $this->execSQL($query); 
+        $result = $results[0];
+        $komp = new komponente();
+        $komp->setB_ID($result["b_id"]);
+        $komp->setL_ID($result["l_id"]);
+        $komp->setR_ID($result["r_id"]);
+        $komp->setK_Notitz($result["k_notitz"]);
+        $komp->setK_Geweahrleistungen($result["k_gewaehrleistungen"]);
+        $komp->setK_Hersteller($result["k_hersteller"]);
+        $komp->getKAR_ID($result["kar_id"]);
+        return $komp;
     }
     
     function saveKomponente($kompnenete)
