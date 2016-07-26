@@ -6,7 +6,8 @@
  * Date: 25.07.2016
  * Time: 22:19
  */
-require("module/baseDbAdapter.php");
+require_once("module/baseDbAdapter.php");
+require_once("database_entities/Lieferant.php");
 class LieferantenDBAdapter extends baseDbAdapter
 {
 

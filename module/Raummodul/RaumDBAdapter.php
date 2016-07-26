@@ -7,16 +7,16 @@
  * Date: 26.07.2016
  * Time: 13:05
  */
-require("module/baseDbAdapter.php");
+require_once("module/baseDbAdapter.php");
 require_once("database_entities/Raum.php");
-class RaumDBAdapter
+class RaumDBAdapter extends baseDbAdapter
 {
     /**
      * Diese Funktion gibt gibt alle Räume zurück
      * @return mixed array[Raum] oder einer der folgenden Fehlercodes
      * -1 = Fehler beim ausführen des SQL
      */
-    function selectLieferanten(){
+    function selectRaum(){
         $sql = "SELECT * FROM raeume";
         $alleRaeume = $this->execSQL($sql);
         //TODO erfragen wie ich an den error komme
@@ -51,7 +51,7 @@ class RaumDBAdapter
     /**
      * @param $raum Raum welcher Lieferant upgedated werden soll
      */
-    function updateLieferant($raum){
+    function updateRaum($raum){
         unset($raum->l_id);
         $this->update("raeume", $raum, "r_id = $raum->r_id");
 
@@ -61,17 +61,17 @@ class RaumDBAdapter
      * Löscht EINEN raum
      * @param $raum Raum zu löschender Lieferant
      */
-    function deleteLieferant($raum){
-        $this->delete("raeume", "l_id = $raum->r_id");
+    function deleteRaum($raum){
+        $this->delete("raeume", "r_id = $raum->r_id");
     }
 
     /**
      * Löscht alle Räume
      * @param $raeumeArray array von Räumen
      */
-    function deleteLieferanten($raeumeArray){
+    function deleteRaeume($raeumeArray){
         foreach($raeumeArray as $raum){
-            $this->deleteLieferant($raum);
+            $this->deleteRaum($raum);
         }
     }
 
