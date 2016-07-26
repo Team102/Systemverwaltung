@@ -12,7 +12,7 @@ class baseDbAdapter
 {
     
     private $dbConnection;
-    private $serverUrl = "http://localhost/TEAM102";
+    private $serverUrl = "http://localhost.TEAM102";
     private $error;
     private $user;
 
