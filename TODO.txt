@@ -1,0 +1,3 @@
+TODO LIST:
+- hat_attribute hat mehrere Primary keys, QUERIES ANPASSEN
+- guck in login.php rein, da sind ganz viele Sachen geschrieben

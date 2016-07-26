@@ -6,17 +6,18 @@
  * Date: 25.07.2016
  * Time: 14:08
  */
-require("module/baseDbAdapter.php");
+require_once("module/baseDbAdapter.php");
+require_once("database_entities/KomponentenAttribute.php");
 class KomponentenAttributeDBAdapter extends baseDbAdapter
 {
 
     /**
-     * Diese Funktion gibt gibt alle KomponentenAttribute zurück
-     * @return mixed array[Lieferant] oder einer der folgenden Fehlercodes
+     * Diese Funktion gibt alle KomponentenAttribute zurück
+     * @return mixed array[KomponentenAttrbibute] oder einer der folgenden Fehlercodes
      * -1 = Fehler beim ausführen des SQL
      */
     function selectKomponentenAttribute(){
-        $sql = "SELECT * FROM KomponentenAttribute";
+        $sql = "SELECT * FROM komponentenattribute";
         $alleKomponentenAttribute = $this->execSQL($sql);
         //TODO erfragen wie ich an den error komme
         if($alleKomponentenAttribute == -1){
@@ -24,35 +25,37 @@ class KomponentenAttributeDBAdapter extends baseDbAdapter
         }
         $KomponentenAttributeArray = array();
         foreach($alleKomponentenAttribute as $row){
-            $lieferant = $this->getKomponentenAttributeFromAssocArray();
-            $KomponentenAttributeArray[] = $lieferant;
+            $komponentenattribute = $this->getKomponentenAttributeFromAssocArray($row);
+            $KomponentenAttributeArray[] = $komponentenattribute;
         }
         return $KomponentenAttributeArray;
     }
 
     /**
      * Fügt den KomponentenAttribute hinzu
-     * @param $lieferant Lieferant welcher Lieferant hinzugefügt werden soll
+     * @param $komponentenattribut KomponentenAttribute welches KompAttribut hinzugefügt werden soll
      */
     function insertKomponentenAttribute($KomponentenAttribute){
-        $this->insert("KomponentenAttribute", $KomponentenAttribute);
+        $this->insert("komponentenattribute", $KomponentenAttribute);
     }
 
     /**
-     * @param $KomponentenAttribute KomponentenAttribute welcher KomponentenAttribute upgedated werden soll
+     * updated das übergebene Komponentenattribut
+     * @param $komponentenAttribute KomponentenAttribute welcher KomponentenAttribute upgedated werden soll
      */
-    function updateKomponentenAttribute($KomponentenAttribute){
-        unset($KomponentenAttribute->l_id);
-        $this->update("KomponentenAttribute", $KomponentenAttribute, "k_id = $KomponentenAttribute->l_id");
+    function updateKomponentenAttribute($komponentenAttribute){
+        $kat_id = $komponentenAttribute->kat_id;
+        unset($komponentenAttribute->kat_id);
+        $this->update("komponentenattribute", $komponentenAttribute, "kat_id = $kat_id");
 
     }
 
     /**
-     * Löscht EINEN KomponentenAttribute
+     * Löscht EIN KomponentenAttribut
      * @param $KomponentenAttribute KomponentenAttribute zu löschender KomponentenAttribute
      */
     function deleteKomponentenAttribute($KomponentenAttribute){
-        $this->delete("KomponentenAttribute", "l_id = $KomponentenAttribute->k_id");
+        $this->delete("KomponentenAttribute", "kat_id = $KomponentenAttribute->kat_id");
     }
 
     /**
@@ -63,9 +66,8 @@ class KomponentenAttributeDBAdapter extends baseDbAdapter
     private function getKomponentenAttributeFromAssocArray($row)
     {
         $KomponentenAttribute = new KomponentenAttribute();
-        $KomponentenAttribute->k_id = $row["k_id"];
         $KomponentenAttribute->kat_id = $row["kat_id"];
-        $KomponentenAttribute->kha_wert = $row["kha_wert"];
+        $KomponentenAttribute->kat_bezeichnung = $row["kat_bezeichnung"];
         return $KomponentenAttribute;
     }
 }
