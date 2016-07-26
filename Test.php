@@ -5,8 +5,8 @@
  * Date: 26.07.2016
  * Time: 10:46
  */
-require("module/Lieferantenmodul/LieferantenDBAdapter.php");
-require("database_entities/Lieferant.php");
+require("module/benutzermodul/BenutzerDBAdapter.php");
+require("database_entities/Benutzer.php");
 require("database_entities/User.php");
 ?>
 
@@ -21,13 +21,22 @@ require("database_entities/User.php");
     <?php
 
         $user = new User("root", "");
-        $lieferantenDBAdapter = new LieferantenDBAdapter($user);
-        $array = $lieferantenDBAdapter->selectLieferanten();
-        foreach($array as $lieferant) {
-            echo $lieferant->l_id . "<br/>";
-            $lieferant->l_id = 0;
-            $lieferantenDBAdapter->insertLieferant($lieferant);
-        }
+        $benutzerDBAdapter = new BenutzerDBAdapter($user);
+        $benutzer = new Benutzer();
+        $benutzer->be_id = 1;
+        $benutzer->be_vorname = "Kevin";
+        $benutzer->be_nachname = "Kekule";
+        $benutzer->be_login = "Keeyzar";
+        $benutzer->be_pwd = password_hash("King", PASSWORD_DEFAULT);
+        $benutzerDBAdapter->insertBenutzer($benutzer);
+//        $user = new User("root", "");
+//        $lieferantenDBAdapter = new LieferantenDBAdapter($user);
+//        $array = $lieferantenDBAdapter->selectLieferanten();
+//        foreach($array as $lieferant) {
+//            echo $lieferant->l_id . "<br/>";
+//            $lieferant->l_id = 0;
+//            $lieferantenDBAdapter->insertLieferant($lieferant);
+//        }
 
     ?>
     </body>
