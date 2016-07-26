@@ -2,6 +2,7 @@
 
 /* 
  * Author: Alexander Burcev
+ * Update: Fadi Koch
  * 25-Jul-2016
  */
 
@@ -11,7 +12,7 @@ class baseDbAdapter
 {
     
     private $dbConnection;
-    private $serverUrl = "http://serverUrl.com";
+    private $serverUrl = "http://localhost/TEAM102";
     private $error;
     private $user;
 
