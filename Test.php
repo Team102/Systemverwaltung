@@ -23,8 +23,16 @@ require_once("module/loginmodul/Login.php");
 
         $user = new User("root", "");
         $benutzerDBAdapter = new BenutzerDBAdapter($user);
+//        $benutzer = new Benutzer();
+//        $benutzer->be_id = 2;
+//        $benutzer->be_vorname = "Kevin";
+//        $benutzer->be_nachname = "Kekule";
+//        $benutzer->be_login = "Keeyzar2";
+//        $benutzer->be_pwd = password_hash("King", PASSWORD_DEFAULT);
+//        $benutzerDBAdapter->insertBenutzer($benutzer);
+
         $login = new Login();
-        echo $login->tryToLogIn("Keeyzar", "King");
+        echo $login->tryToLogIn("Keeyzar2", "King3");
 //        $user = new User("root", "");
 //        $lieferantenDBAdapter = new LieferantenDBAdapter($user);
 //        $array = $lieferantenDBAdapter->selectLieferanten();

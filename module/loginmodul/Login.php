@@ -27,12 +27,14 @@ class Login
         if(is_null($benutzer)) return -1;
         //überprüft das übergebene Passwort gegen den in der Datenbank enthaltenen Hashwert
         echo $benutzer->be_pwd . "<br/>";
-        $options = [
-            'salt' => custom_function_for_salt(), //write your own code to generate a suitable salt
-            'cost' => 12 // the default cost is 10
-        ];
-        echo password_hash($password, PASSWORD_DEFAULT, );
-        if(password_verify($password, $benutzer->be_pwd)){
+//        $hash = password_hash("King", PASSWORD_DEFAULT);
+//        if(password_verify("King", $hash)){
+//            echo "NICE";
+//        } else {
+//            echo "NOT NICE";
+//        }
+
+        if(password_verify($password, substr($benutzer->be_pwd, 0, 60))){
             return $benutzer;
         } else {
             return -2;
