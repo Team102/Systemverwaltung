@@ -49,6 +49,12 @@ class kompnenentenDbAdapter extends baseDbAdapter
         return $komp;
     }
     
+    function deleteKomponenteById($komponente)
+    {
+        $this->delete("kompnonenten", "k_id = " . $komponente->getK_ID());
+    }
+        
+        
     function saveKomponente($kompnenete)
     {
         $ID = $kompnenete->getK_ID();
