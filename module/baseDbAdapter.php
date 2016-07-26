@@ -11,9 +11,10 @@ class baseDbAdapter
 {
     
     private $dbConnection;
-    private $serverUrl = "localhost";
+    private $serverUrl = "http://serverUrl.com";
     private $error;
     private $user;
+    private $transact;
 
     function __construct($user) {
         $this->user = $user;
@@ -53,7 +54,7 @@ class baseDbAdapter
     {
         try
         {
-            $this->dbConnect();
+            $this->dbConnect(); 
             $statement = $this->dbConnection->prepare($query);
             $statement->execute($entrys);
             $result = $statement->fetchAll();
@@ -66,6 +67,24 @@ class baseDbAdapter
         }
     }
     
+    public function getTransact()
+    {
+        $this->dbConnect();
+        return $dbConnection;
+    }
+    
+    public function execTransactSQL($PDO, $query, $entrys = null)
+    {
+            $statement = $PDO->dbConnection->prepare($query);
+            if($entrys == null)
+            {
+                $statement->exec($entrys);
+            }
+            else
+            {
+                $statement->exec($entrys);
+            }               
+    }
     
     
     function insert($tablename, $parameters)
