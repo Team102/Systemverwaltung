@@ -5,9 +5,10 @@
  * Date: 26.07.2016
  * Time: 10:46
  */
-require("module/benutzermodul/BenutzerDBAdapter.php");
-require("database_entities/Benutzer.php");
-require("database_entities/User.php");
+require_once("module/benutzermodul/BenutzerDBAdapter.php");
+require_once("database_entities/Benutzer.php");
+require_once("database_entities/User.php");
+require_once("module/loginmodul/Login.php");
 ?>
 
 <html>
@@ -22,13 +23,8 @@ require("database_entities/User.php");
 
         $user = new User("root", "");
         $benutzerDBAdapter = new BenutzerDBAdapter($user);
-        $benutzer = new Benutzer();
-        $benutzer->be_id = 1;
-        $benutzer->be_vorname = "Kevin";
-        $benutzer->be_nachname = "Kekule";
-        $benutzer->be_login = "Keeyzar";
-        $benutzer->be_pwd = password_hash("King", PASSWORD_DEFAULT);
-        $benutzerDBAdapter->insertBenutzer($benutzer);
+        $login = new Login();
+        echo $login->tryToLogIn("Keeyzar", "King");
 //        $user = new User("root", "");
 //        $lieferantenDBAdapter = new LieferantenDBAdapter($user);
 //        $array = $lieferantenDBAdapter->selectLieferanten();

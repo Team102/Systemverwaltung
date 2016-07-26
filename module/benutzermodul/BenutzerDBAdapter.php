@@ -52,6 +52,7 @@ class BenutzerDBAdapter extends baseDbAdapter
      */
     function insertBenutzer($benutzer){
         $this->insert("benutzer", $benutzer);
+        echo $this->getError();
     }
 
     /**

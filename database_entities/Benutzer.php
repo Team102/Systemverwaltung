@@ -6,6 +6,7 @@
  * Date: 26.07.2016
  * Time: 13:35
  */
+//namespace Benutzer;
 class Benutzer
 {
     public $be_id;

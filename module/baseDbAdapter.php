@@ -11,7 +11,7 @@ class baseDbAdapter
 {
     
     private $dbConnection;
-    private $serverUrl = "http://serverUrl.com";
+    private $serverUrl = "localhost";
     private $error;
     private $user;
 

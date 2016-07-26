@@ -20,11 +20,18 @@ class Login
      */
     function tryToLogIn($username, $password){
         //loginuser ist ein select ONly user auf der Datenbank um die benutzer anzuzeigen
-        $user = new User("loginuser", "");
+//        $user = new User("loginuser", "");
+        $user = new User("root", ""); //TODO entfernen;
         $dbAdapter = new BenutzerDBAdapter($user);
         $benutzer = $dbAdapter->selectBenutzerByName($username);
         if(is_null($benutzer)) return -1;
         //überprüft das übergebene Passwort gegen den in der Datenbank enthaltenen Hashwert
+        echo $benutzer->be_pwd . "<br/>";
+        $options = [
+            'salt' => custom_function_for_salt(), //write your own code to generate a suitable salt
+            'cost' => 12 // the default cost is 10
+        ];
+        echo password_hash($password, PASSWORD_DEFAULT, );
         if(password_verify($password, $benutzer->be_pwd)){
             return $benutzer;
         } else {
