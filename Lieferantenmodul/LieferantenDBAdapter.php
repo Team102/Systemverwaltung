@@ -11,14 +11,16 @@ class LieferantenDBAdapter extends baseDbAdapter
 
     /**
      * Diese Funktion gibt gibt alle Lieferanten zurück
-     * @return array[Lieferant];
+     * @return mixed array[Lieferant] oder einer der folgenden Fehlercodes
+     * -1 = Fehler beim ausführen des SQL
      */
     function selectLieferanten(){
-        $this->dbConnect();
-
         $sql = "SELECT * FROM lieferanten";
         $alleLieferanten = $this->execSQL($sql);
         //TODO erfragen wie ich an den error komme
+        if($alleLieferanten == -1){
+            return -1;
+        }
         $lieferantenArray = array();
         foreach($alleLieferanten as $row){
             $lieferant = $this->getLieferantFromAssocArray($row);
@@ -31,7 +33,6 @@ class LieferantenDBAdapter extends baseDbAdapter
      * Selektiert Lieferanten anhand der übergebenen Condition
      */
     function selectLieferantenByCondition(){
-        $this->dbConnect();
         $condition;
         $sql = "SELECT * FROM lieferanten WHERE $condition";
         $parameter;
@@ -61,7 +62,6 @@ class LieferantenDBAdapter extends baseDbAdapter
      * @param $lieferant Lieferant welcher Lieferant upgedated werden soll
      */
     function updateLieferant($lieferant){
-        $this->dbConnect();
         $lieferantParameter = array();
 
         $lieferantParameter["l_id"] = $lieferant->l_id;
@@ -83,7 +83,6 @@ class LieferantenDBAdapter extends baseDbAdapter
      * @param $lieferant Lieferant zu löschender Lieferant
      */
     function deleteLieferant($lieferant){
-        $this->dbConnect();
         $this->delete("lieferant", "l_id = $lieferant->l_id");
         //TODO erfragen wegen message
     }
