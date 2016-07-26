@@ -11,7 +11,7 @@ class baseDbAdapter
 {
     
     private $dbConnection;
-    private $serverUrl = "http://serverUrl.com";
+    private $serverUrl = "localhost";
     private $error;
     private $user;
 
@@ -40,7 +40,8 @@ class baseDbAdapter
         }
         catch (PDOException $ex)
         {
-            $this->$error = $ex->getMessage();
+            echo $ex->getMessage();
+//            $this->$error = $ex->getMessage();
             return -1;
         }
     }
