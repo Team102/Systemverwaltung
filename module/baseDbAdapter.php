@@ -70,7 +70,7 @@ class baseDbAdapter
     public function getTransact()
     {
         $this->dbConnect();
-        return $dbConnection;
+        return $this->dbConnection;
     }
     
     public function execTransactSQL($PDO, $query, $entrys = null)
