@@ -40,8 +40,8 @@ class baseDbAdapter
         }
         catch (PDOException $ex)
         {
-            $error = $ex->getMessage();
-            return $error;
+            $this->$error = $ex->getMessage();
+            return -1;
         }
     }
     
@@ -109,5 +109,9 @@ class baseDbAdapter
     {
         $query = " DELETE FROM " . $tablename . "WHERE " . $where;
         $this->execSQL($query);
+    }
+
+    function getError(){
+        return $this->error;
     }
 }
