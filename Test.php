@@ -6,9 +6,9 @@
  * Time: 10:46
  */
 //require_once("module/benutzermodul/BenutzerDBAdapter.php");
-require_once("module/Lieferantenmodul/LieferantenDBAdapter.php");
-require_once("database_entities/Benutzer.php");
+require_once("database_entities/Rollen.php");
 require_once("database_entities/User.php");
+require_once("module/rollenmodul/RollenDBAdapter.php");
 //require_once("module/loginmodul/Loginmodul.php");
 ?>
 
@@ -45,8 +45,17 @@ require_once("database_entities/User.php");
 //        }
 //
         //TODO functions hinzufügen
+        $rollenCRUD = new RollenDBAdapter(null);
+        $alle = $rollenCRUD->selectRollen();
+        foreach ($alle as $rolle){
+            echo $rolle->ro_bezeichnung;
+        }
+//        var_dump($alle);
+//            foreach ($alle as $func){
+//                echo "$func->f_bezeichnung <br/>";
+//            }
 
-//        $benutzer = new Benutzer();
+    //        $benutzer = new Benutzer();
 //        $benutzer->be_id = 2;
 //        $benutzer->be_vorname = "Kevin";
 //        $benutzer->be_nachname = "Kekule";

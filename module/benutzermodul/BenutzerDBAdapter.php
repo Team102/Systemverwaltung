@@ -11,6 +11,12 @@ require_once(__DIR__ . "/../baseDbAdapter.php");
 require_once(__DIR__ . "/../../database_entities/Benutzer.php");
 class BenutzerDBAdapter extends baseDbAdapter
 {
+
+    function __construct($user)
+    {
+        parent::__construct($user);
+    }
+
     /**
     * Diese Funktion gibt gibt alle Benutzer zurück
     * @return mixed array[Benutzer] oder einer der folgenden Fehlercodes
@@ -50,12 +56,13 @@ class BenutzerDBAdapter extends baseDbAdapter
     }
 
     /**
-     * Fügt den Benutzer hinzu
+     * Fügt den Benutzer hinzu aber hasht vorher das passwort
      * @param $benutzer Benutzer welche Benutzer hinzugefügt werden soll
+     * @return int ID von dem eingefügten benutzer
      */
     function insertBenutzer($benutzer){
-        $this->insert("benutzer", $benutzer);
-        echo $this->getError();
+        $benutzer->be_pwd = password_hash($benutzer->be_pwd, PASSWORD_DEFAULT);
+        return $this->insert("benutzer", $benutzer);
     }
 
     /**
@@ -74,7 +81,19 @@ class BenutzerDBAdapter extends baseDbAdapter
     function updateBenutzer($benutzer){
         $benutzerId = $benutzer->be_id;
         unset($benutzer->be_id);
+
+        //überprüfen ob das PW geändert wurde -- gegen die DB prüfen
+        $pwEqual = $benutzer->be_pwd == $this->selectBenutzerByName("$benutzer->be_login")->be_pwd;
+        if(!$pwEqual){
+            echo "PW GAENDERT!";
+            //wenn nicht equal, dann hat sich das PW geändert!
+            $benutzer->be_pwd = password_hash($benutzer->be_pwd, PASSWORD_DEFAULT);
+        } else {
+            echo "NOT GEAENDERT!";
+        }
+
         $this->update("benutzer", $benutzer, "be_id = $benutzerId");
+        $benutzer->be_id = $benutzerId;
 
     }
 
@@ -82,7 +101,7 @@ class BenutzerDBAdapter extends baseDbAdapter
      * Löscht EINEN Benutzer
      * @param $benutzer Benutzer zu löschende Benutzer
      */
-    function deleteMulBenutzer($benutzer){
+    function deleteBenutzer($benutzer){
         $this->delete("benutzer", "be_id = $benutzer->be_id");
     }
 
@@ -90,9 +109,9 @@ class BenutzerDBAdapter extends baseDbAdapter
      * Löscht alle Benutzer
      * @param $benutzerArray array von Benutzern
      */
-    function deleteRollen($benutzerArray){
+    function deleteMulBenutzer($benutzerArray){
         foreach($benutzerArray as $benutzer){
-            $this->deleteMulBenutzer($benutzer);
+            $this->deleteBenutzer($benutzer);
         }
     }
 

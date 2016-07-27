@@ -6,14 +6,20 @@
  * Date: 26.07.2016
  * Time: 13:17
  */
-require_once("module/baseDbAdapter.php");
-require_once("database_entities/Rollen.php");
+require_once(__DIR__ . "/../baseDbAdapter.php");
+require_once(__DIR__ . "/../../database_entities/Rollen.php");
 
 class RollenDBAdapter extends baseDbAdapter
 {
+
+    function __construct($user)
+    {
+        parent::__construct($user);
+    }
+
     /**
      * Diese Funktion gibt gibt alle Rollen zurück
-     * @return mixed array[Rolle] oder einer der folgenden Fehlercodes
+     * @return array|Rollen oder einer der folgenden Fehlercodes
      * -1 = Fehler beim ausführen des SQL
      */
     function selectRollen(){
@@ -32,7 +38,7 @@ class RollenDBAdapter extends baseDbAdapter
 
     /**
      * Fügt die Rolle hinzu
-     * @param $rolle Rolle welche Rolle hinzugefügt werden soll
+     * @param $rolle Rollen welche Rolle hinzugefügt werden soll
      */
     function insertRolle($rolle){
         $this->insert("rollen", $rolle);
