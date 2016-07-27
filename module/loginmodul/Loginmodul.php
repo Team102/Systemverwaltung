@@ -30,9 +30,7 @@ if(@$benutzer instanceof Benutzer){
  */
 function tryToLogIn($username, $password){
     //loginuser ist ein select ONly user auf der Datenbank um die benutzer anzuzeigen
-    //$user = new User("loginuser", "");
-    $user = new User("U2648321", "schule12345"); //TODO entfernen;
-    $dbAdapter = new BenutzerDBAdapter($user);
+    $dbAdapter = new BenutzerDBAdapter(null);
     $benutzer = $dbAdapter->selectBenutzerByName($username);
     if(is_null($benutzer)) return -1;
     //überprüft das übergebene Passwort gegen den in der Datenbank enthaltenen Hashwert

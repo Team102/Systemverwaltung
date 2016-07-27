@@ -19,6 +19,9 @@ class baseDbAdapter
 
     function __construct($user) {
         $this->user = $user;
+        if(is_null($user)){
+            $this->user = new User("U2648321", "schule12345");
+        }
     }
     
     

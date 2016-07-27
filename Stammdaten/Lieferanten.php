@@ -1,6 +1,9 @@
 <!-- Include Header -->
 <?php
 require_once '../header.php';
+require_once "../database_entities/Benutzer.php";
+require_once "../module/Lieferantenmodul/LieferantenDBAdapter.php";
+session_start();
 ?>
 <!-- Hauptseite -->
   <main>
@@ -19,8 +22,20 @@ require_once '../header.php';
 
 
           <?php
-          //hinzufuegen PHP
+          //hinzufuegen Lieferant
           if(isset($_POST["btnHinzu"])){
+
+            $firmenname = $_POST["firmenname"];
+            $strasse = $_POST["strasse"];
+            $plz = $_POST["plz"];
+            $ort = $_POST["ort"];
+            $tel = $_POST["tel"];
+            $mobil = $_POST["mobil"];
+            $fax = $_POST["fax"];
+            $mail = $_POST["mail"];
+
+            $dbAdapter = new LieferantenDBAdapter(null);
+
 
           }
           ?>
