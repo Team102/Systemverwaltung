@@ -1,6 +1,10 @@
 <?php
 require_once '../header.php';
- ?>
+require_once "../database_entities/Benutzer.php";
+require_once '../database_entities/KomponentenArten.php';
+require_once '../module/Komponentenarten/KomponentenartenDBAdapter.php';
+session_start();
+?>
         <main>
             <div class="container">
                 <div class="spacer"></div>
@@ -13,7 +17,26 @@ require_once '../header.php';
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
                         <h3 id="hinzu">Komponentenart hinzufügen</h3>
+                        <label><?php echo @$returnString?></label>
                         <!-- Form um Komponentenarten hinzuzufügen -->
+                        
+                        <?php
+                        //KomponentenartHinzufuegen
+                        if(isset($_POST["btnHinzu"]))
+                        {
+                            echo testerer;
+                            if($_POST["name"] == "")
+                            {
+                                return;
+                            }
+                            $Component = New KomponentenArten();
+                            $Component->kar_bezeichnung = $_POST["name"];
+                            $dbAdapter = new KomponentenartenDBAdapter(null);
+                            $id = $dbAdapter->insertkomponentenarten($Component);
+                            
+                            $returnString = "Eine Kompnentenart mit der ID " . $id . " wurde angelegt";
+                        }
+                        ?>
                         <form method="post" action="../Stammdaten/Komponentenart.php">
                           <fieldset class="form-group">
                             <label for="id">ID</label>
@@ -21,7 +44,7 @@ require_once '../header.php';
                           </fieldset>
                             <fieldset class="form-group">
                               <label for="name">Komponentenart</label>
-                              <input type="text" name="" class="form-control" id="name" required>
+                              <input type="text" name="name" class="form-control" id="name" required>
                             </fieldset>
                             <button type="submit" class="btn btn-primary">Abschicken</button>
                         </form>
