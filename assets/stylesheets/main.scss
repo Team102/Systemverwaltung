@@ -1,0 +1,44 @@
+@import "bootstrap.scss";
+
+$top-bar: #333333;
+
+body {
+  background-color:transparent;
+}
+
+
+
+.top-bar {
+  background: $top-bar;
+  color: #fff;
+  margin: 0 30px;
+  padding: 0 20px;
+  position: relative;
+  height: 49px;
+}
+
+.top-bar:before {
+  position: absolute;
+  left: -58px;
+  top: -12px;
+  width: 80px;
+  height: 40px;
+  content: "";
+  background: $top-bar;
+  -ms-transform: rotate(40deg);
+  -webkit-transform: rotate(40deg);
+  transform: rotate(40deg);
+}
+
+.top-bar:after {
+  position: absolute;
+  right: -58px;
+  top: -12px;
+  width: 80px;
+  height: 40px;
+  content: "";
+  background: $top-bar;
+  -ms-transform: rotate(40deg);
+  -webkit-transform: rotate(40deg);
+  transform: rotate(-40deg);
+}
