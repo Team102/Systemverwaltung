@@ -85,11 +85,8 @@ class BenutzerDBAdapter extends baseDbAdapter
         //überprüfen ob das PW geändert wurde -- gegen die DB prüfen
         $pwEqual = $benutzer->be_pwd == $this->selectBenutzerByName("$benutzer->be_login")->be_pwd;
         if(!$pwEqual){
-            echo "PW GAENDERT!";
             //wenn nicht equal, dann hat sich das PW geändert!
             $benutzer->be_pwd = password_hash($benutzer->be_pwd, PASSWORD_DEFAULT);
-        } else {
-            echo "NOT GEAENDERT!";
         }
 
         $this->update("benutzer", $benutzer, "be_id = $benutzerId");
