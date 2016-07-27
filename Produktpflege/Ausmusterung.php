@@ -1,5 +1,10 @@
+<!-- Include Header -->
 <?php
-require_once "../header.php";
+require_once '../header.php';
+require_once "../database_entities/Benutzer.php";
+require_once "../database_entities/Lieferant.php";
+require_once "../module/Lieferantenmodul/LieferantenDBAdapter.php";
+session_start();
 ?>
     <main>
         <div class="container">

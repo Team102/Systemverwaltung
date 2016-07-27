@@ -5,7 +5,14 @@
  * 25-Jul-2016
  */
 
-require_once("module/baseDbAdapter.php");
+/**
+ * Der Datenbankadapter für die Komponenten
+ * User: Fadi Koch
+ * Date: 27.07.2016
+ * Time: 14:37
+ */
+require_once("../module/baseDbAdapter.php");
+require_once("../database_entities/komponente.php");
 
 class kompnenentenDbAdapter extends baseDbAdapter
 {
