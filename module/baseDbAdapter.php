@@ -61,15 +61,16 @@ class baseDbAdapter
         {
             $this->dbConnect();
             $statement = $this->dbConnection->prepare($query);
+            echo $query;
             $statement->execute();
             $result = $statement->fetchAll();
+
             return $result;
         }
         catch (PDOException $ex)
         {
             $this->error = $ex->getMessage();
             echo $this->error;
-            echo "SUUUUUUUUUPER";
             return -1;
         }
     }
@@ -178,11 +179,11 @@ class baseDbAdapter
         $updateValues = substr($updateValues, 0, (strlen($updateValues)-1));
         if($condition == null)
         {
-            $query = "UPDATE " . $tablename . "SET " . $updateValues . "WHERE 1=1 ";
+            $query = "UPDATE " . $tablename . " SET " . $updateValues . " WHERE 1=1 ";
         }
         else
         {
-            $query = "UPDATE " . $tablename . "SET " . $updateValues . "WHERE " . $condition;
+            $query = "UPDATE " . $tablename . " SET " . $updateValues . " WHERE " . $condition;
         }
         $this->execSQL($query);
     }
@@ -194,7 +195,7 @@ class baseDbAdapter
      */
     function delete($tablename, $where)
     {
-        $query = " DELETE FROM " . $tablename . "WHERE " . $where;
+        $query = "DELETE FROM " . $tablename . " WHERE " . $where;
         $this->execSQL($query);
     }
 
