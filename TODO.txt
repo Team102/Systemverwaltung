@@ -1,0 +1,2 @@
+TODO LIST:
+- guck in login.php rein, da sind ganz viele Sachen geschrieben

@@ -8,7 +8,7 @@
 require_once("module/benutzermodul/BenutzerDBAdapter.php");
 require_once("database_entities/Benutzer.php");
 require_once("database_entities/User.php");
-require_once("module/loginmodul/Login.php");
+require_once("module/loginmodul/Loginmodul.php");
 ?>
 
 <html>
@@ -21,10 +21,18 @@ require_once("module/loginmodul/Login.php");
 
     <?php
 
-        $user = new User("root", "");
+        $user = new User("U2648321", "schule12345");
         $benutzerDBAdapter = new BenutzerDBAdapter($user);
-        $login = new Login();
-        echo $login->tryToLogIn("Keeyzar", "King");
+        $benutzer = new Benutzer();
+        $benutzer->be_id = 2;
+        $benutzer->be_vorname = "Kevin";
+        $benutzer->be_nachname = "Kekule";
+        $benutzer->be_login = "Keeyzar";
+        $benutzer->be_pwd = password_hash("King", PASSWORD_DEFAULT);
+        $benutzerDBAdapter->insertBenutzer($benutzer);
+//
+//        $login = new Login();
+//        echo $login->tryToLogIn("Keeyzar2", "King3");
 //        $user = new User("root", "");
 //        $lieferantenDBAdapter = new LieferantenDBAdapter($user);
 //        $array = $lieferantenDBAdapter->selectLieferanten();

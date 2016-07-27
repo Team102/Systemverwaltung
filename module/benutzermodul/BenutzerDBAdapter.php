@@ -7,8 +7,8 @@
  * Time: 13:35
  */
 
-require_once("module/baseDbAdapter.php");
-require_once("database_entities/Benutzer.php");
+require_once(__DIR__ . "/../baseDbAdapter.php");
+require_once(__DIR__ . "/../../database_entities/Benutzer.php");
 class BenutzerDBAdapter extends baseDbAdapter
 {
     /**
@@ -43,7 +43,10 @@ class BenutzerDBAdapter extends baseDbAdapter
         foreach($alleBenutzer as $row){
             $benutzerArray[] = $this->getBenutzerFromAssocArray($row);
         }
-        return $benutzerArray[0];
+
+        //falls keiner gefunden wird, dann kommt hier ein info die soll
+        //unterdrückt werden
+        return @$benutzerArray[0];
     }
 
     /**
