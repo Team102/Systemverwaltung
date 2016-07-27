@@ -5,6 +5,8 @@
  * 25-Jul-2016
  */
 
+require_once("module/baseDbAdapter.php");
+
 class kompnenentenDbAdapter extends baseDbAdapter
 {
     function __construct($user) 
@@ -26,7 +28,7 @@ class kompnenentenDbAdapter extends baseDbAdapter
             $komp->setK_Notitz($result["k_notitz"]);
             $komp->setK_Geweahrleistungen($result["k_gewaehrleistungen"]);
             $komp->setK_Hersteller($result["k_hersteller"]);
-            $komp->getKAR_ID($result["kar_id"]);
+            $komp->setKAR_ID($result["kar_id"]);
             
             $kompnenetenList[] = $komp;
         }
