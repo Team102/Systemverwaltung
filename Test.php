@@ -22,8 +22,8 @@ require_once("database_entities/User.php");
 
     <?php
 
-        $user = new User("root", "");
-        $lieferantDbAdapter = new LieferantenDBAdapter($user);
+//        $user = new User("root", "");
+//        $lieferantDbAdapter = new LieferantenDBAdapter($user);
 //        $lieferant = new Lieferant();
 //        $lieferant->l_firmenname = "firmaname";
 //        $lieferant->l_email = "email";
@@ -35,13 +35,17 @@ require_once("database_entities/User.php");
 //        $lieferant->l_mobil= "mobil";
 //        $i = $lieferantDbAdapter->insertLieferant($lieferant);
 //        echo $i;
-        $alleLiefer = $lieferantDbAdapter->selectLieferanten();
-        echo count($alleLiefer);
-        var_dump($alleLiefer);
-        foreach($alleLiefer as $lieferant){
-            echo $lieferant->l_firmenname;
-        }
-    
+//        $alleLiefer = $lieferantDbAdapter->selectLieferanten();
+//        echo count($alleLiefer);
+//        var_dump($alleLiefer);
+//
+//
+//        foreach($alleLiefer as $lieferant){
+//            echo $lieferant->l_firmenname;
+//        }
+//
+        //TODO functions hinzufügen
+
 //        $benutzer = new Benutzer();
 //        $benutzer->be_id = 2;
 //        $benutzer->be_vorname = "Kevin";

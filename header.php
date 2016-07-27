@@ -92,7 +92,7 @@ if($_SESSION["Benutzer"] instanceof Benutzer) $istAngemeldet = true;
                             <a class="dropdown-item" href="/Reporting/Geraeteausstattung.php">Geräteausstattung</a>
                             <a class="dropdown-item" href="/Reporting/Hardware-Ausstattung.php">Hardware-Ausstattung</a>
                             <a class="dropdown-item" href="/Reporting/Software-Ausstattung.php">Software-Ausstattung</a>
-                            <a class="dropdown-item" href="/Reporting/Suchen.php">Geräte suchen</a>
+<!--                            <a class="dropdown-item" href="/Reporting/Suchen.php">Geräte suchen</a>-->
                         </div>
                     </li>
                     <?php if(!$istAngemeldet): ?>
