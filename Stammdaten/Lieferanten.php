@@ -2,6 +2,7 @@
 <?php
 require_once '../header.php';
 require_once "../database_entities/Benutzer.php";
+require_once "../database_entities/Lieferant.php";
 require_once "../module/Lieferantenmodul/LieferantenDBAdapter.php";
 session_start();
 ?>
@@ -21,31 +22,46 @@ session_start();
           <!-- Hier eventuell Rechtemäßig abfragen und Ein, oder Ausbleden lassen -->
 
 
-          <?php
-          //hinzufuegen Lieferant
-          if(isset($_POST["btnHinzu"])){
-
-            $firmenname = $_POST["firmenname"];
-            $strasse = $_POST["strasse"];
-            $plz = $_POST["plz"];
-            $ort = $_POST["ort"];
-            $tel = $_POST["tel"];
-            $mobil = $_POST["mobil"];
-            $fax = $_POST["fax"];
-            $mail = $_POST["mail"];
-
-            $dbAdapter = new LieferantenDBAdapter(null);
-
-
-          }
-          ?>
+<!--          --><?php
+//          //hinzufuegen Lieferant
+//          if(isset($_POST["btnHinzu"])){
+//
+//            $firmenname = $_POST["firmenname"];
+//            $strasse = $_POST["strasse"];
+//            $plz = $_POST["plz"];
+//            $ort = $_POST["ort"];
+//            $tel = $_POST["tel"];
+//            $mobil = $_POST["mobil"];
+//            $fax = $_POST["fax"];
+//            $mail = $_POST["mail"];
+//
+//            //TODO check for errors
+//            $lieferant = new Lieferant();
+//            $lieferant->l_firmenname = $firmenname;
+//            $lieferant->l_strasse = $strasse;
+//            $lieferant->l_plz = $plz;
+//            $lieferant->l_ort = $ort;
+//            $lieferant->l_tel = $tel;
+//            $lieferant->l_mobil = $mobil;
+//            $lieferant->l_fax = $fax;
+//            $lieferant->l_email = $mail;
+//
+//            $dbAdapter = new LieferantenDBAdapter(null);
+//            $id = $dbAdapter->insertLieferant($lieferant);
+//
+//            $infoString = "Neuer Lieferant mit der Id: " . $id . " wurde in die Datenbank eingefügt";
+//
+//          }
+//          ?>
           <hr class="trenner">
                 <div class="row">
                   <!-- Mittig Zentriert -->
                     <div class="col-md-8 col-md-offset-2">
                         <h3 id="hinzu">Lieferant hinzufügen</h3>
-                        <!-- Formular um Lieferanten hinzuzufügen -->
-                        <!-- Bitte bei allen Formularfeldern den Namen für euch anpassen. -->
+                      <label name="info_label"><?php echo @$infoString?></label>
+
+                      <!-- Formular um Lieferanten hinzuzufügen -->
+                      <!-- Bitte bei allen Formularfeldern den Namen für euch anpassen. -->
                         <form method="post" action="../Stammdaten/Lieferanten.php">
                           <!-- ID Feld auf Disabled gestellt um keinen Input zuzulassen -->
                           <fieldset class="form-group">
@@ -185,4 +201,4 @@ session_start();
         <!-- Include Footer -->
         <?php
         require_once '../footer.php';
-         ?>
+        ?>
