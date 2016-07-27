@@ -22,37 +22,42 @@ session_start();
           <!-- Hier eventuell Rechtemäßig abfragen und Ein, oder Ausbleden lassen -->
 
 
-<!--          --><?php
-//          //hinzufuegen Lieferant
-//          if(isset($_POST["btnHinzu"])){
-//
-//            $firmenname = $_POST["firmenname"];
-//            $strasse = $_POST["strasse"];
-//            $plz = $_POST["plz"];
-//            $ort = $_POST["ort"];
-//            $tel = $_POST["tel"];
-//            $mobil = $_POST["mobil"];
-//            $fax = $_POST["fax"];
-//            $mail = $_POST["mail"];
-//
-//            //TODO check for errors
-//            $lieferant = new Lieferant();
-//            $lieferant->l_firmenname = $firmenname;
-//            $lieferant->l_strasse = $strasse;
-//            $lieferant->l_plz = $plz;
-//            $lieferant->l_ort = $ort;
-//            $lieferant->l_tel = $tel;
-//            $lieferant->l_mobil = $mobil;
-//            $lieferant->l_fax = $fax;
-//            $lieferant->l_email = $mail;
-//
-//            $dbAdapter = new LieferantenDBAdapter(null);
-//            $id = $dbAdapter->insertLieferant($lieferant);
-//
-//            $infoString = "Neuer Lieferant mit der Id: " . $id . " wurde in die Datenbank eingefügt";
-//
-//          }
-//          ?>
+          <?php
+          //hinzufuegen Lieferant
+          if(isset($_POST["btnHinzu"])){
+
+            $firmenname = $_POST["firmenname"];
+            $strasse = $_POST["strasse"];
+            $plz = $_POST["plz"];
+            $ort = $_POST["ort"];
+            $tel = $_POST["tel"];
+            $mobil = $_POST["mobil"];
+            $fax = $_POST["fax"];
+            $mail = $_POST["mail"];
+              echo "NICE1!";
+
+              //TODO check for errors
+            $lieferant = new Lieferant();
+            $lieferant->l_firmenname = $firmenname;
+            $lieferant->l_strasse = $strasse;
+            $lieferant->l_plz = $plz;
+            $lieferant->l_ort = $ort;
+            $lieferant->l_tel = $tel;
+            $lieferant->l_mobil = $mobil;
+            $lieferant->l_fax = $fax;
+            $lieferant->l_email = $mail;
+
+              echo "NICE1.2";
+            $dbAdapter = new LieferantenDBAdapter(null);
+              echo "NICE2!";
+
+              $id = $dbAdapter->insertLieferant($lieferant);
+              echo "NICE3";
+
+            $infoString = "Neuer Lieferant mit der Id: " . $id . " wurde in die Datenbank eingefügt";
+
+          }
+          ?>
           <hr class="trenner">
                 <div class="row">
                   <!-- Mittig Zentriert -->

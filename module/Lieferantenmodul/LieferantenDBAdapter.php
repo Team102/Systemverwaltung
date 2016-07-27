@@ -6,10 +6,15 @@
  * Date: 25.07.2016
  * Time: 22:19
  */
-require_once(__DIR__ . "../../module/baseDbAdapter.php");
-require_once(__DIR__ . "../../database_entities/Lieferant.php");
+require_once("../module/baseDbAdapter.php");
+require_once("../database_entities/Lieferant.php");
 class LieferantenDBAdapter extends baseDbAdapter
 {
+
+    function __construct($user)
+    {
+        parent::__construct($user);
+    }
 
     /**
      * Diese Funktion gibt gibt alle Lieferanten zurück
@@ -97,5 +102,3 @@ class LieferantenDBAdapter extends baseDbAdapter
         return $lieferant;
     }
 }
-
-?>
