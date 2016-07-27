@@ -7,8 +7,8 @@
  * Date: 26.07.2016
  * Time: 13:05
  */
-require_once("module/baseDbAdapter.php");
-require_once("database_entities/Raum.php");
+require_once("../module/baseDbAdapter.php");
+require_once("../database_entities/Raum.php");
 class RaumDBAdapter extends baseDbAdapter
 {
     /**
@@ -33,9 +33,10 @@ class RaumDBAdapter extends baseDbAdapter
     /**
      * Fügt den Raum hinzu
      * @param $raum Raum welcher Raum hinzugefügt werden soll
+     * @return int die erstellte ID;
      */
     function insertRaum($raum){
-        $this->insert("raeume", $raum);
+        return $this->insert("raeume", $raum);
     }
 
     /**
@@ -52,8 +53,10 @@ class RaumDBAdapter extends baseDbAdapter
      * @param $raum Raum welcher Lieferant upgedated werden soll
      */
     function updateRaum($raum){
-        unset($raum->l_id);
-        $this->update("raeume", $raum, "r_id = $raum->r_id");
+        $id = $raum->r_id;
+        unset($raum->r_id);
+        $this->update("raeume", $raum, "r_id = $id");
+        $raum->r_id = $id;
 
     }
 
