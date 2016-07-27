@@ -5,6 +5,8 @@
  * 25-Jul-2016
  */
 
+require_once("module/baseDbAdapter.php");
+
 class kompnenentenDbAdapter extends baseDbAdapter
 {
     function __construct($user) 

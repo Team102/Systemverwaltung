@@ -1,8 +1,10 @@
 <?php
 
-/* 
+/** 
  * Author: Alexander Burcev
  * 25-Jul-2016
+ * Dieses Modul ist die Basis fuer das fuellen von Entity objekten aus der Datenbank.
+ * Wird an ubergoerdnete DB-Adapter vererbt
  */
 
 
@@ -19,14 +21,29 @@ class baseDbAdapter
         $this->user = $user;
     }
     
+    
+    /**
+     * Initialisierung und Verbindungsaufbau mit PDO
+     * @return int Bei -1 Exception bei 0 Success
+     * 
+     */
     function dbConnect(){
         
         $this->dbConnection = new PDO("mysql:host=$this->serverUrl;dbname=itv",  $this->user->username, $this->user->password);
         if(is_null($this->dbConnection)){
-            return "Es konnte keine Verbindung hergestellt werden Grund: " . mysqli_connect_error();
+            /**return "Es konnte keine Verbindung hergestellt werden";*/
+            return -1;
         }
         return 0;
     }
+    
+    /**
+     * Diese Funktion sended die uebregebene Query an die Datenbank
+     * @param type $query Die auszufuehrende Query als String
+     * @return type Der Returnwert wird direkt von den Datebnak weitergeleitet, Select Queries 
+     * geben die Daten in einem Zweidimensionalem Array zurueck
+     * Bei einem Fehler wird die Error Message in der $error Variable gespeichert und eine -1 int zurueckgegeben.
+     */
     
     function execSQL($query)
     {
@@ -45,9 +62,15 @@ class baseDbAdapter
         }
     }
     
-    /*
-     * Diese function wird auch als selct verwendet da sie ein array mit key value pairs ausliefert
-     */
+/**
+ * 
+ * @param type $query Die Auszufuerende Query als String
+ * @param type $entrys Uberegebene PArameter fuer die Query in einem Zweidmensionalem Array
+ * geignet fuer die nutzung mit anonymen und fest vergebnene placeholdern
+ * @return type Der Returnwert wird direkt von den Datebnak weitergeleitet, Select Queries 
+ * geben die Daten in einem Zweidimensionalem Array zurueck
+ * Bei einem Fehler wird die Error Message in der $error Variable gespeichert und eine -1 int zurueckgegeben.
+ */
     
     function execSQLParameters($query, $entrys)
     {
@@ -61,16 +84,32 @@ class baseDbAdapter
         }
         catch (PDOException $ex)
         {
-            $error = $ex->getMessage();
-            return $error;
+            $this->error = $ex->getMessage();
+            return -1;
         }
     }
+    
+    /**
+     * Diese Funktion initialisert eine Transaktion und gibt das ausfuehrende object zurueck.
+     * Zur verwendung mit execTransactSQL
+     * @return type PDO Verbindung
+     */
     
     public function getTransact()
     {
         $this->dbConnect();
+        $this->dbConnection->beginTransaction();
         return $this->dbConnection;
     }
+    
+    
+    /**
+     * Diese Funktion sended die uebergebenen Queries gegen das uebergebne PDO Object
+     * zur verwendung mit getTransact()
+     * @param type $PDO PDO Objekt
+     * @param type $query Auszufuehrende Query als String
+     * @param type $entrys Parameter fuer die Query, Optional!
+     */
     
     public function execTransactSQL($PDO, $query, $entrys = null)
     {
@@ -85,7 +124,14 @@ class baseDbAdapter
             }               
     }
     
-    
+    /**
+     * Diese Funktion generiert eine Insert Query aus den uebergebenen Parametern 
+     * fuer die im Tabellenamen uebergebenen Tabelle und fuehr diese aus.
+     * Die Parameter werden gegen injection escaped
+     * @param type $tablename Name der Tabelle
+     * @param type $parameters Die zu verwendeten Parameter in Form von entities, der "key" wird als spaltenname
+     * und die value als value genutzt.
+     */
     function insert($tablename, $parameters)
     {
         $names = "";
@@ -101,9 +147,13 @@ class baseDbAdapter
         $this->execSQL($query);
     }
     
-    /*
-     * update funktion erwartet condition als optinalen parameter
-     */
+/**
+ * Diese Funktion generiert eine escapede UPDATE Query aus den uebergenene Paremetern
+ * @param type $tablename Name der Tabelle
+ * @param type $parameters Die zu verwendeten Parameter in Form von entities, der "key" wird als spaltenname
+ * und die value als value genutzt.
+ * @param type $condition optionale WHERE condition
+ */
     
     function update($tablename, $parameters, $condition = null)
     {
@@ -123,12 +173,22 @@ class baseDbAdapter
         }
         $this->execSQL($query);
     }
+    
+    /**
+     * Diese Funktion generiert eine Delete query aus den uebrgebenen PArametern
+     * @param type $tablename Name der Tabelle
+     * @param type $where WHERE bedingung wie: 1=1
+     */
     function delete($tablename, $where)
     {
         $query = " DELETE FROM " . $tablename . "WHERE " . $where;
         $this->execSQL($query);
     }
 
+    /**
+     * Gibt den letzten abgefangegen Fehler zurueck
+     * @return type Exception
+     */
     function getError(){
         return $this->error;
     }
