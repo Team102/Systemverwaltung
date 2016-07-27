@@ -7,6 +7,7 @@
 
 require_once("module/baseDbAdapter.php");
 
+
 class KomponenteHatAttributeDbAdapter extends baseDbAdapter
 {
     function __construct($user) 
