@@ -23,13 +23,29 @@ class KomponenteHatAttributeDbAdapter extends baseDbAdapter
         foreach ($results as $result)
         {
             $best = new KomponenteHatAttribute(); 
-            $best->k_id = ($result["b_id"]);
-            $best->kat_id = ($result["b_einkaufsdatum"]);
-            $best->kha_wert = ($result["b_kaufbeleg"]);
+            $best->k_id = ($result["k_id"]);
+            $best->kat_id = ($result["kat_id"]);
+            $best->kha_wert = ($result["kha_wert"]);
             
             $KHAList[] = $best;
         }
         return $KHAList;
+    }
+    
+    function getKATListByKHA($KHA)
+    {
+        $query = "SELECT * FROM komponentenattribute WHERE kat_id = " . $KHA->kat_id;
+        $results = $this->execSQL($query); 
+        $KATList = [];
+        foreach ($results as $result)
+        {
+            $KAT = new KomponentenAttribute();
+            $KAT->kat_id = $result["kat_id"];
+            $KAT->kat_bezeichnung = $result["kat_bezeichnung"];
+            
+            $KATList[] = $KAT;
+        }
+        return $KATList;
     }
     
     function getBestellungById($bestellung)
