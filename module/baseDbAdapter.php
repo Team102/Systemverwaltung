@@ -8,7 +8,7 @@
  */
 
 
-
+require_once ("../database_entities/User.php");
 class baseDbAdapter
 {
 
@@ -65,6 +65,8 @@ class baseDbAdapter
         catch (PDOException $ex)
         {
             $this->error = $ex->getMessage();
+            echo $this->error;
+            echo "SUUUUUUUUUPER";
             return -1;
         }
     }
@@ -152,7 +154,7 @@ class baseDbAdapter
         $values = substr($values, 0, (strlen($values)-1));
         $query = "INSERT INTO " . $tablename . " (" . $names . ") VALUES (" . $values .")";
         $this->execSQL($query);
-//        return $this->dbConnection->lastInsertId();
+        return $this->dbConnection->lastInsertId();
     }
     
 /**
