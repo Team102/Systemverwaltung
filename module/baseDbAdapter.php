@@ -28,6 +28,7 @@ class baseDbAdapter
     }
     
     
+    
     /**
      * Initialisierung und Verbindungsaufbau mit PDO
      * @return int Bei -1 Exception bei 0 Success
