@@ -34,7 +34,6 @@ session_start();
             $mobil = $_POST["mobil"];
             $fax = $_POST["fax"];
             $mail = $_POST["mail"];
-              echo "NICE1!";
 
               //TODO check for errors
             $lieferant = new Lieferant();
@@ -47,12 +46,8 @@ session_start();
             $lieferant->l_fax = $fax;
             $lieferant->l_email = $mail;
 
-              echo "NICE1.2";
             $dbAdapter = new LieferantenDBAdapter(null);
-              echo "NICE2!";
-
-              $id = $dbAdapter->insertLieferant($lieferant);
-              echo "NICE3";
+            $id = $dbAdapter->insertLieferant($lieferant);
 
             $infoString = "Neuer Lieferant mit der Id: " . $id . " wurde in die Datenbank eingefügt";
 
@@ -76,32 +71,32 @@ session_start();
                           <!-- Input für Firmenname -->
                             <fieldset class="form-group">
                               <label for="firmenname">Firmenname</label>
-                              <input type="text" name="" class="form-control" id="firmenname" required>
+                              <input type="text" name="firmenname" class="form-control" id="firmenname" required>
                             </fieldset>
                             <!-- Input für Straße -->
                             <fieldset class="form-group">
                               <label for="strasse">Straße</label>
-                              <input type="text" name="" class="form-control" id="strasse" required>
+                              <input type="text" name="strasse" class="form-control" id="strasse" required>
                             </fieldset>
                             <!-- Input für Postleitzahl -->
                             <fieldset class="form-group">
                               <label for="plz">Postleitzahl</label>
-                              <input type="number" name="" class="form-control" id="plz" required>
+                              <input type="number" name="plz" class="form-control" id="plz" required>
                             </fieldset>
                             <!-- Input für Ort -->
                             <fieldset class="form-group">
                               <label for="ort">Ort</label>
-                              <input type="text" name="" class="form-control" id="ort" required>
+                              <input type="text" name="prt" class="form-control" id="ort" required>
                             </fieldset>
                             <!-- Input für Telefonnummer -->
                             <fieldset class="form-group">
                               <label for="tel">Telefonnummer</label>
-                              <input type="text" name="" class="form-control" id="tel" required>
+                              <input type="text" name="tel" class="form-control" id="tel" required>
                             </fieldset>
                             <!-- Input für Mobilnummer -->
                             <fieldset class="form-group">
                               <label for="mobil">Mobilnummer</label>
-                              <input type="text" name="" class="form-control" id="mobil" required>
+                              <input type="text" name="mobil" class="form-control" id="mobil" required>
                             </fieldset>
                             <!-- Input für Faxnummer -->
                             <fieldset class="form-group">
@@ -111,7 +106,7 @@ session_start();
                             <!-- Input für EMail Adresse -->
                             <fieldset class="form-group">
                               <label for="mail">E-Mail Adresse</label>
-                              <input type="mail" name="" class="form-control" id="mail" required>
+                              <input type="mail" name="mail" class="form-control" id="mail" required>
                             </fieldset>
                             <!-- Senden Button -->
                             <button type="submit" class="btn btn-primary" name="btnHinzu">Abschicken</button>
@@ -123,6 +118,27 @@ session_start();
                   <!-- Hier eventuell Rechtemäßig abfragen und Ein, oder Ausbleden lassen -->
                   <hr class="trenner">
 
+
+
+              <?php
+              //Lieferant ändern part
+                //hole Liste von allen Lieferanten
+              if($dbAdapter == null){
+                  $dbAdapter = new LieferantenDBAdapter(null);
+              }
+              $lieferantenArray = $dbAdapter->selectLieferanten();
+
+              $ausgewaehlterLieferant = null;
+                if(isset($_POST["searchSubmit"])){
+                    $zuSuchendeId = $_POST["searchSubmit"];
+                    foreach($lieferantenArray as $lieferant){
+                        if($lieferant->l_id == $zuSuchendeId){
+                            $ausgewaehlterLieferant = $zuSuchendeId;
+                        break;
+                        }
+                    }
+                }
+              ?>
                   <div class="row">
                       <div class="col-md-8 col-md-offset-2">
                           <h3 id="aend">Lieferant ändern</h3>
@@ -132,27 +148,38 @@ session_start();
                               <label for="search">Lieferant suchen: </label>
                               <select class="form-control" name="searchfield" id="search">
                                 <!-- Repeat für alle Lieferanten -->
-                                <option value="" >ID - Lieferant</option>
+                                  <?php
+                                  if(count($lieferantenArray) > 0){
+                                      foreach($lieferantenArray as $lieferant){
+                                          echo "<option value='$lieferant->l_id'>$lieferant->l_id - $lieferant->l_firmenname</option>";
+                                      }
+                                  }
+                                  ?>
                               </select>
                             </fieldset>
                             <button type="submit" class="btn btn-primary" name="searchSubmit">Suchen</button>
                           </form>
                           <!-- Abstand (50px nach oben) -->
                           <div class="spacer"></div>
+
+
                           <!-- Formular um ein Lieferant zu ändern -->
                           <!-- Values und Placeholder Dynamisch Befüllen lassen anhand der obigen Suche-->
                           <form method="post" action="../Stammdaten/Lieferanten.php">
                             <fieldset class="form-group">
                               <label for="id">ID</label>
-                              <input type="number" name="id" class="form-control" id="id" placeholder="" disabled value="1" placeholder="1">
+                              <input type="number" name="id" class="form-control" id="id" placeholder="" disabled placeholder="1"
+                                        value="<?php echo $ausgewaehlterLieferant->l_id?>">
                             </fieldset>
                               <fieldset class="form-group">
                                 <label for="firmenname">Firmenname</label>
-                                <input type="text" name="" class="form-control" id="firmenname" required value="Musterfirma" placeholder="Musterfirma">
+                                <input type="text" name="" class="form-control" id="firmenname" required placeholder="Musterfirma"
+                                       value="<?php echo $ausgewaehlterLieferant->l_id?>">
                               </fieldset>
                               <fieldset class="form-group">
                                 <label for="strasse">Straße</label>
-                                <input type="text" name="" class="form-control" id="strasse" required value="Musterstraße 15" placeholder="Musterstraße 15">
+                                <input type="text" name="" class="form-control" id="strasse" required placeholder="Musterstraße 15"
+                                       value="<?php echo $ausgewaehlterLieferant->l_id?>">>
                               </fieldset>
                               <fieldset class="form-group">
                                 <label for="plz">Postleitzahl</label>

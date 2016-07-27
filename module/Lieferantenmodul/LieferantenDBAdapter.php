@@ -8,6 +8,8 @@
  */
 require_once("../module/baseDbAdapter.php");
 require_once("../database_entities/Lieferant.php");
+//require_once("module/baseDbAdapter.php");
+//require_once("database_entities/Lieferant.php");
 class LieferantenDBAdapter extends baseDbAdapter
 {
 
