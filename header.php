@@ -1,3 +1,9 @@
+<?php
+require_once "database_entities/Benutzer.php";
+session_start();
+$istAngemeldet = false;
+if($_SESSION["Benutzer"] instanceof Benutzer) $istAngemeldet = true;
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,9 +50,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/Reporting/Reporting.php">Reporting</a>
                     </li>
+                    <?php if(!$istAngemeldet): ?>
                     <li class="nav-item pull-right">
                         <a class="nav-link" href="/login.php"><i class="fa fa-sign-in"></i> Login</a>
                     </li>
+                    <?php else: ?>
+                    <li class="nav-item pull-right">
+                        <a class="nav-link" href="/logout.php"><i class="fa fa-sign-out"> Abmelden</i></a>
+                    </li>
+                    <?php endif; ?>
                 </ul>
             </div>
         </div>
@@ -83,9 +95,18 @@
                             <a class="dropdown-item" href="/Reporting/Suchen.php">Geräte suchen</a>
                         </div>
                     </li>
-                    <li class="nav-item pull-right">
-                        <a class="nav-link" href="/login.php"><i class="fa fa-sign-in"></i> Login</a>
-                    </li>
+                    <?php if(!$istAngemeldet): ?>
+                        <li class="nav-item pull-right">
+                            <a class="nav-link" href="/login.php"><i class="fa fa-sign-in"></i> Login</a>
+                        </li>
+                    <?php else: ?>
+                        <li class="nav-item pull-right">
+                            <a class="nav-link" href="/logout.php"><i class="fa fa-sign-out"></i> Abmelden</a>
+                        </li>
+                        <li class="nav-item pull-right">
+                            <span  class="nav-link" style="font-weight:bold;">Hallo <?php echo $_SESSION["Benutzer"]->be_login?></span>
+                        </li>
+                    <?php endif; ?>
                 </ul>
             </div>
         </div>
