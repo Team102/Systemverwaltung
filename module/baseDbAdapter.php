@@ -9,6 +9,7 @@
 
 
 require_once ("../database_entities/User.php");
+//require_once ("database_entities/User.php");
 class baseDbAdapter
 {
 
@@ -17,6 +18,7 @@ class baseDbAdapter
      */
     private $dbConnection;
     private $serverUrl = "rdbms.strato.de";
+//    private $serverUrl = "localhost";
     private $error;
     private $user;
 
@@ -36,6 +38,7 @@ class baseDbAdapter
     function dbConnect(){
         
         $this->dbConnection = new PDO("mysql:host=$this->serverUrl;dbname=DB2648321",  $this->user->username, $this->user->password);
+//        $this->dbConnection = new PDO("mysql:host=$this->serverUrl;dbname=itv",  $this->user->username, $this->user->password);
         if(is_null($this->dbConnection)){
             /**return "Es konnte keine Verbindung hergestellt werden";*/
             return -1;

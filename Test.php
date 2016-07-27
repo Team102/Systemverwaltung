@@ -5,10 +5,11 @@
  * Date: 26.07.2016
  * Time: 10:46
  */
-require_once("module/benutzermodul/BenutzerDBAdapter.php");
+//require_once("module/benutzermodul/BenutzerDBAdapter.php");
+require_once("module/Lieferantenmodul/LieferantenDBAdapter.php");
 require_once("database_entities/Benutzer.php");
 require_once("database_entities/User.php");
-require_once("module/loginmodul/Loginmodul.php");
+//require_once("module/loginmodul/Loginmodul.php");
 ?>
 
 <html>
@@ -21,15 +22,33 @@ require_once("module/loginmodul/Loginmodul.php");
 
     <?php
 
-        $user = new User("U2648321", "schule12345");
-        $benutzerDBAdapter = new BenutzerDBAdapter($user);
-        $benutzer = new Benutzer();
-        $benutzer->be_id = 2;
-        $benutzer->be_vorname = "Kevin";
-        $benutzer->be_nachname = "Kekule";
-        $benutzer->be_login = "Keeyzar";
-        $benutzer->be_pwd = password_hash("King", PASSWORD_DEFAULT);
-        $benutzerDBAdapter->insertBenutzer($benutzer);
+        $user = new User("root", "");
+        $lieferantDbAdapter = new LieferantenDBAdapter($user);
+//        $lieferant = new Lieferant();
+//        $lieferant->l_firmenname = "firmaname";
+//        $lieferant->l_email = "email";
+//        $lieferant->l_fax = "fax";
+//        $lieferant->l_plz = "24552";
+//        $lieferant->l_strasse = "tolle Strasse";
+//        $lieferant->l_tel= "tel";
+//        $lieferant->l_ort= "ort";
+//        $lieferant->l_mobil= "mobil";
+//        $i = $lieferantDbAdapter->insertLieferant($lieferant);
+//        echo $i;
+        $alleLiefer = $lieferantDbAdapter->selectLieferanten();
+        echo count($alleLiefer);
+        var_dump($alleLiefer);
+        foreach($alleLiefer as $lieferant){
+            echo $lieferant->l_firmenname;
+        }
+    
+//        $benutzer = new Benutzer();
+//        $benutzer->be_id = 2;
+//        $benutzer->be_vorname = "Kevin";
+//        $benutzer->be_nachname = "Kekule";
+//        $benutzer->be_login = "Keeyzar";
+//        $benutzer->be_pwd = password_hash("King", PASSWORD_DEFAULT);
+//        $benutzerDBAdapter->insertBenutzer($benutzer);
 //
 //        $login = new Login();
 //        echo $login->tryToLogIn("Keeyzar2", "King3");
