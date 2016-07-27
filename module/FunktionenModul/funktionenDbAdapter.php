@@ -6,13 +6,25 @@
  */
 
 require("module/baseDbAdapter.php");
+
+/**
+ * CRUD Modul fuer Funktionen
+ */
 class funktionenDbAdapter extends baseDbAdapter
 {
+     /**
+     * Constructer
+     * @param type $user der DB User fuer die Anmeldung an der Datenbank
+     */
     function __construct($user) 
         {
             parent::__construct($user);
         }
 
+        /**
+         * Gibt alle Funktionsarten als Enttiy List zureck die sich in der Datenbank befinden
+         * @return \funktionen
+         */
         function getAllFunctionSets()
         {
             $functionSetList = [];
@@ -33,30 +45,21 @@ class funktionenDbAdapter extends baseDbAdapter
             }
             return $functionSetList;
         }
-
-        function getFunktionenById($funktionen)
-        {
-            $query = "SELECT * FROM functionen WHERE f_id = " . $funktionen->getK_ID();
-            $results = $this->execSQL($query); 
-            $result = $results[0];
-            $func = new funktionen(); 
-            $func->setF_ID($result["f_id"]);
-            $func->setF_Bezeichnung($result["f_bezeichnung"]);
-            $func->setF_Lesen($result["f_lesen"]);
-            $func->setF_Neu($result["f_neu"]);
-            $func->setF_Aendern($result["f_aendern"]);
-            $func->setF_Loeschen($result["f_loeschen"]);
-            $func->setF_Ausfuheren($result["F_ausfuehren"]);
-
-            return $func;
-        }
-
+        
+        /**
+         * Loscht die uebergebne Funktion aus der Datenbank
+         * @param type $funktionen
+         */
         function deleteFunctionSetById($funktionen)
         {
             $this->delete("functionen", "f_id = " . $funktionen->getF_ID());
         }
 
 
+        /**
+        * Speichert die uebergebne Funktion, entscheided automatisch ueber Updae oder neuem Insert
+        * @param type $funktionen
+        */
         function saveFunctionenSet($funktionen)
         {
             $ID = $funktionen->getF_ID();
