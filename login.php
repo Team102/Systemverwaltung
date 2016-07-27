@@ -30,7 +30,7 @@ if(@$_SESSION["Benutzer"] instanceof Benutzer) {
                         <?php else: ?>
                             <label style="color:white;">Sie sind bereits angemeldet.</label>
 <!--                            TODO style in css auslagern-->
-                        <?php endif?>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

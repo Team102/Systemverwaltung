@@ -16,6 +16,14 @@ require_once '../header.php';
           </div>
           <!-- Trennlinie -->
           <!-- Hier eventuell Rechtemäßig abfragen und Ein, oder Ausbleden lassen -->
+
+
+          <?php
+          //hinzufuegen PHP
+          if(isset($_POST["btnHinzu"])){
+
+          }
+          ?>
           <hr class="trenner">
                 <div class="row">
                   <!-- Mittig Zentriert -->
@@ -70,7 +78,7 @@ require_once '../header.php';
                               <input type="mail" name="" class="form-control" id="mail" required>
                             </fieldset>
                             <!-- Senden Button -->
-                            <button type="submit" class="btn btn-primary" name="hinzu">Abschicken</button>
+                            <button type="submit" class="btn btn-primary" name="btnHinzu">Abschicken</button>
                         </form>
                     </div>
                   </div>

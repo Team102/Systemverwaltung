@@ -72,7 +72,7 @@
     </div>
     <!--Einbinden der nötigen der Dateien-->
     <script src="/js/jquery-2.2.4.min.js"></script>
-    <script src="/js/barba.js" type="text/javascript"></script>
+<!--    <script src="/js/barba.js" type="text/javascript"></script>-->
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/main.js"></script>
     <script src="/js/jquery.cookieBar.js"></script>
