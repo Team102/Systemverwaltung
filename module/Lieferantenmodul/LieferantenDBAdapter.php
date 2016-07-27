@@ -6,8 +6,8 @@
  * Date: 25.07.2016
  * Time: 22:19
  */
-require_once("module/baseDbAdapter.php");
-require_once("database_entities/Lieferant.php");
+require_once(__DIR__ . "../../module/baseDbAdapter.php");
+require_once(__DIR__ . "../../database_entities/Lieferant.php");
 class LieferantenDBAdapter extends baseDbAdapter
 {
 
@@ -31,22 +31,13 @@ class LieferantenDBAdapter extends baseDbAdapter
         return $lieferantenArray;
     }
 
-//    /**
-//     * Selektiert Lieferanten anhand der übergebenen Condition
-//     */
-//    function selectLieferantenByCondition(){
-//        $condition;
-//        $sql = "SELECT * FROM lieferanten WHERE $condition";
-//        $parameter;
-//        $alleLieferanten = $this->execSQLParameters($sql, $parameter);
-//    }
-
     /**
      * Fügt den Lieferanten hinzu
      * @param $lieferant Lieferant welcher Lieferant hinzugefügt werden soll
+     * @return int
      */
     function insertLieferant($lieferant){
-        $this->insert("lieferanten", $lieferant);
+        return $this->insert("lieferanten", $lieferant);
     }
 
     /**
@@ -106,3 +97,5 @@ class LieferantenDBAdapter extends baseDbAdapter
         return $lieferant;
     }
 }
+
+?>

@@ -1,6 +1,9 @@
 <?php
 require_once "../header.php";
+
+require_once "../database_entities/Benutzer.php"
 ?>
+<?php session_start();?>
 <main>
   <div class="container">
       <div class="spacer"></div>
