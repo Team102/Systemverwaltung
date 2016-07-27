@@ -61,8 +61,10 @@ class LieferantenDBAdapter extends baseDbAdapter
      * @param $lieferant Lieferant welcher Lieferant upgedated werden soll
      */
     function updateLieferant($lieferant){
+        $id = $lieferant->l_id;
         unset($lieferant->l_id);
-        $this->update("lieferant", $lieferant, "l_id = $lieferant->l_id");
+        $this->update("lieferanten", $lieferant, "l_id = $id");
+        $lieferant->l_id = $id;
 
     }
 
@@ -71,7 +73,7 @@ class LieferantenDBAdapter extends baseDbAdapter
      * @param $lieferant Lieferant zu löschender Lieferant
      */
     function deleteLieferant($lieferant){
-        $this->delete("lieferant", "l_id = $lieferant->l_id");
+        $this->delete("lieferanten", "l_id = $lieferant->l_id");
     }
 
     /**
