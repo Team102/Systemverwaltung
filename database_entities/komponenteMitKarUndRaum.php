@@ -6,10 +6,13 @@
  * @author = Kevin Kekule
  */
 require_once __DIR__ ."/komponente.php";
-class komponenteMitKarBezeichnung extends komponente
+class komponenteMitKarUndRaum extends komponente
 {
 
     private $kar_bezeichnung;
+    private $r_nr;
+
+
 
     /**
      * kopiert die komponente.
@@ -44,6 +47,20 @@ class komponenteMitKarBezeichnung extends komponente
     {
         $this->kar_bezeichnung = $kar_bezeichnung;
     }
+    /**
+     * @return mixed
+     */
+    public function getRNr()
+    {
+        return $this->r_nr;
+    }
 
+    /**
+     * @param mixed $r_nr
+     */
+    public function setRNr($r_nr)
+    {
+        $this->r_nr = $r_nr;
+    }
 
 }
