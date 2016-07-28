@@ -92,7 +92,7 @@ class RollenDBAdapter extends baseDbAdapter
         $rolle = new Rollen();
         $rolle->ro_id = $row["ro_id"];
         $rolle->ro_bezeichnung = $row["ro_bezeichnung"];
-        $rolle->ro_wert = $row["ro_notiz"];
+        $rolle->ro_wert = @$row["ro_notiz"];
         return $rolle;
     }
 }

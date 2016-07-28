@@ -1,7 +1,7 @@
 <?php
 require_once "header.php";
 require_once "database_entities/Benutzer.php";
-session_start();
+@@session_start();
 if(@$_SESSION["Benutzer"] instanceof Benutzer) {
     $istAngemeldet = true;
 }

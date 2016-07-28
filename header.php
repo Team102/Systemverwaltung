@@ -1,8 +1,8 @@
 <?php
 require_once "database_entities/BenutzerExtra.php";
-session_start();
+@session_start();
 $istAngemeldet = false;
-if($_SESSION["Benutzer"] instanceof BenutzerExtra) $istAngemeldet = true;
+if(@$_SESSION["Benutzer"] instanceof BenutzerExtra) $istAngemeldet = true;
 ?>
 <!DOCTYPE html>
 <html>

@@ -2,7 +2,7 @@
 require_once(__DIR__ . "/../benutzermodul/BenutzerDBAdapter.php");
 require_once(__DIR__ . "/../../database_entities/User.php");
 require_once(__DIR__ . "/../../database_entities/BenutzerExtra.php");
-session_start();
+@session_start();
 $benutzer = tryToLogIn($_POST["benutzer"], $_POST["passwort"]);
 //wenn Benutzer zurückkommt, dann ist er angemeldet, ansonsten gab es einen Fehler
 //DIESE FUNKTION FUNKTIONIERT!! ES IST NUR; WEIL DERZEIT EINE DEBUGGMESSAGE GESENDET WIRD!

@@ -3,7 +3,7 @@ require_once (__DIR__ . '/../header.php');
 require_once (__DIR__ . '/../database_entities/Benutzer.php');
 require_once (__DIR__ . '/../database_entities/KomponentenArten.php');
 require_once (__DIR__ . '/../module/Komponentenarten/KomponentenartenDBAdapter.php');
-session_start();
+@session_start();
 ?>
         <main>
             <div class="container">
@@ -28,6 +28,7 @@ session_start();
                             }
                             $Component = New KomponentenArten();
                             $Component->kar_bezeichnung = $_POST["name"];
+                            $Component->kar_id = 0;
                             
                             
                             $id = $dbAdapter->insertkomponentenarten($Component);
@@ -70,7 +71,7 @@ session_start();
                  
                         ?>
                 <hr class="trenner">
-                <?php if($_SESSION["Benutzer"] instanceof BenutzerExtra): ?>
+                <?php if(@$_SESSION["Benutzer"] instanceof BenutzerExtra): ?>
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
                         <h3 id="hinzu">Komponentenart hinzufügen</h3>

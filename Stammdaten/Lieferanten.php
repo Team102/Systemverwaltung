@@ -4,7 +4,7 @@ require_once '../header.php';
 require_once "../database_entities/Benutzer.php";
 require_once "../database_entities/Lieferant.php";
 require_once "../module/Lieferantenmodul/LieferantenDBAdapter.php";
-session_start();
+@session_start();
 //hinzufuegen Lieferant
 function getLieferant(){
     $lieferant = new Lieferant();
@@ -30,8 +30,8 @@ function getLieferant(){
 
 //Lieferant ändern part
 //hole Liste von allen Lieferanten
-if($dbAdapter == null){
-    $dbAdapter = new LieferantenDBAdapter(null);
+if(@$dbAdapter == null){
+    @$dbAdapter = new LieferantenDBAdapter(null);
 }
 
 $status = "";
@@ -42,11 +42,11 @@ $bereitsGeladen = false;
 if(isset($_POST["btnHinzu"])){
     //TODO check for errors
     $lieferant = getLieferant();
-    var_dump($lieferant);
+    $lieferant->l_id = 0;
     $dbAdapter = new LieferantenDBAdapter(null);
-//    $id = $dbAdapter->insertLieferant($lieferant);
+    $id = $dbAdapter->insertLieferant($lieferant);
 
-    $infoString = "Neuer Lieferant mit der Id: " . $id . " wurde in die Datenbank eingefügt";
+    $infoString = "Neuer Lieferant mit der Id: " . @$id . " wurde in die Datenbank eingefügt";
 } else if(isset($_POST["delete"])){
     if($dbAdapter != null){
         $dbAdapter = new LieferantenDBAdapter(null);
@@ -98,7 +98,7 @@ if(!$bereitsGeladen){
           <!-- Trennlinie -->
           <!-- Hier eventuell Rechtemäßig abfragen und Ein, oder Ausbleden lassen -->
           <hr class="trenner">
-          <?php if($_SESSION["Benutzer"] instanceof BenutzerExtra && $_SESSION["Benutzer"]->darfAlles): ?>
+          <?php if(@$_SESSION["Benutzer"] instanceof BenutzerExtra && $_SESSION["Benutzer"]->darfAlles): ?>
                 <div class="row">
                   <!-- Mittig Zentriert -->
                     <div class="col-md-8 col-md-offset-2">
@@ -175,7 +175,6 @@ if(!$bereitsGeladen){
                                   if(count($lieferantenArray) > 0){
                                       var_dump($ausgewaehlterLieferant);
                                       foreach($lieferantenArray as $lieferant){
-                                          $selected = "";
                                           if($ausgewaehlterLieferant != null && $ausgewaehlterLieferant->l_id == $lieferant->l_id){
                                               $selected = "selected";
                                           } else {
@@ -201,32 +200,32 @@ if(!$bereitsGeladen){
                               <fieldset class="form-group">
                                   <label for="id">ID</label>
                                   <input type="text" name="id" class="form-control" id="id" readonly placeholder="1"
-                                         value="<?php echo $ausgewaehlterLieferant->l_id?>">
+                                         value="<?php echo @$ausgewaehlterLieferant->l_id?>">
                               </fieldset>
                               <fieldset class="form-group">
                                 <label for="firmenname">Firmenname</label>
                                 <input type="text" name="firmenname" class="form-control" id="firmenname" required placeholder="Musterfirma"
-                                       value="<?php echo $ausgewaehlterLieferant->l_firmenname?>">
+                                       value="<?php echo @$ausgewaehlterLieferant->l_firmenname?>">
                               </fieldset>
                               <fieldset class="form-group">
                                 <label for="strasse">Straße</label>
                                 <input type="text" name="strasse" class="form-control" id="strasse" required placeholder="Musterstraße 15"
-                                       value="<?php echo $ausgewaehlterLieferant->l_strasse?>">
+                                       value="<?php echo @$ausgewaehlterLieferant->l_strasse?>">
                               </fieldset>
                               <fieldset class="form-group">
                                 <label for="plz">Postleitzahl</label>
                                 <input type="number" name="plz" class="form-control" id="plz" required placeholder="00000"
-                                       value="<?php echo $ausgewaehlterLieferant->l_plz?>">
+                                       value="<?php echo @$ausgewaehlterLieferant->l_plz?>">
                               </fieldset>
                               <fieldset class="form-group">
                                 <label for="ort">Ort</label>
                                 <input type="text" name="ort" class="form-control" id="ort" required placeholder="Musterort"
-                                       value="<?php echo $ausgewaehlterLieferant->l_ort?>">
+                                       value="<?php echo @$ausgewaehlterLieferant->l_ort?>">
                               </fieldset>
                               <fieldset class="form-group">
                                 <label for="tel">Telefonnummer</label>
                                 <input type="text" name="tel" class="form-control" id="tel" required placeholder="0870 66 66 66 60"
-                                       value="<?php echo $ausgewaehlterLieferant->l_tel?>">
+                                       value="<?php echo @$ausgewaehlterLieferant->l_tel?>">
                               </fieldset>
                               <fieldset class="form-group">
                                 <label for="mobil">Mobilnummer</label>
@@ -236,12 +235,12 @@ if(!$bereitsGeladen){
                               <fieldset class="form-group">
                                 <label for="fax">Faxnummer</label>
                                 <input type="text" name="fax" class="form-control" id="fax" required placeholder="0870 66 66 66 60"
-                                       value="<?php echo $ausgewaehlterLieferant->l_fax?>">
+                                       value="<?php echo @$ausgewaehlterLieferant->l_fax?>">
                               </fieldset>
                               <fieldset class="form-group">
                                 <label for="mail">E-Mail Adresse</label>
                                 <input type="mail" name="mail" class="form-control" id="mail" required placeholder="mustermann@musterfirma.com"
-                                       value="<?php echo $ausgewaehlterLieferant->l_email?>">
+                                       value="<?php echo @$ausgewaehlterLieferant->l_email?>">
                               </fieldset>
                               <button type="submit" class="btn btn-primary" name="btnAend">Abschicken</button>
                           </form>

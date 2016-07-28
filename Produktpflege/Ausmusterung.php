@@ -49,7 +49,7 @@ if(isset($_POST["ausmustern"])){
                 <h2>Ausmusterung</h2>
             </div>
             <hr class="trenner">
-            <?php if($_SESSION["Benutzer"] instanceof BenutzerExtra && $_SESSION["Benutzer"]->darfAlles): ?>
+            <?php if(@$_SESSION["Benutzer"] instanceof BenutzerExtra && $_SESSION["Benutzer"]->darfAlles): ?>
                 <div class="row">
                 <div class="col-md-8 col-md-offset-2">
                     <h3 id="hinzu">Gerät ausmustern</h3>

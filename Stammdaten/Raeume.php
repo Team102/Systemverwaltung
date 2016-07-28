@@ -13,6 +13,7 @@ require_once "../module/Raummodul/RaumDBAdapter.php";
 
     if(isset($_POST["insert"])){
         $newRaum = new Raum();
+        $newRaum->r_id = 0;
         $newRaum->r_nr = $_POST["nummer"];
         $newRaum->r_notiz = $_POST["notiz"];
         $newRaum->r_bezeichnung = $_POST["bezeichnung"];
@@ -60,7 +61,7 @@ require_once "../module/Raummodul/RaumDBAdapter.php";
                     <p><a class="nav-link" href="#hinzu">Hinzufügen</a> // <a class="nav-link" href="#aend">Ändern</a> // <a class="nav-link" href="#del">Löschen</a></p>
                 </div>
                 <hr class="trenner">
-                <?php if($_SESSION["Benutzer"] instanceof BenutzerExtra && $_SESSION["Benutzer"]->darfAlles): ?>
+                <?php if(@$_SESSION["Benutzer"] instanceof BenutzerExtra && $_SESSION["Benutzer"]->darfAlles): ?>
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
                         <h3 id="hinzu">Raum hinzufügen</h3>
@@ -100,7 +101,6 @@ require_once "../module/Raummodul/RaumDBAdapter.php";
                                 <!-- Repeat für Alle Räume -->
                                   <?php
                                     foreach ($alleRaeume as $raum){
-                                      $select = "";
                                       if($zuAendernderRaum != null && $zuAendernderRaum->r_id == $raum->r_id){
                                           $select = "selected";
                                       } else {

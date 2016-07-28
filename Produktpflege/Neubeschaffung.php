@@ -11,7 +11,7 @@ require_once "../module/komponentenattribute/KomponentenattributeDBAdapter.php";
 require_once "../module/wird_beschrieben_druch/WirdbeschriebenDurchDBAdapter.php";
 require_once "../database_entities/Benutzer.php"
 ?>
-<?php //session_start();?>
+<?php //@session_start();?>
 <!---->
 <?php
 //$statusInsert = null;
@@ -73,6 +73,7 @@ require_once "../database_entities/Benutzer.php"
           <p></p>
       </div>
       <hr class="trenner">
+      <?php if(@$_SESSION["Benutzer"] instanceof BenutzerExtra && $_SESSION["Benutzer"]->darfAlles): ?>
       <div class="row">
           <div class="col-md-8 col-md-offset-2">
               <h3 id="hinzu">Neues Gerät anlegen</h3>
@@ -83,7 +84,7 @@ require_once "../database_entities/Benutzer.php"
                   <select class="form-control" name="searchfield" id="searchfield">
                     <!-- Repeat für alle Komponentenarten -->
                       <?php
-                      if(count($komponentenartenArray) > 0){
+                      if(count(@$komponentenartenArray) > 0){
                           foreach($komponentenartenArray as $komponentenArt){
                               $selected = "";
                               if($ausgewaehlteKomponentenArt != null && $ausgewaehlteKomponentenArt-> kar_id == $komponentenArt->kar_id){
@@ -113,10 +114,10 @@ require_once "../database_entities/Benutzer.php"
                       <select name="Raum" class="form-control" id="Raum" required>
                           <!-- Repeat für alle Komponentenarten -->
                           <?php
-                          if(count($raumArray) > 0){
+                          if(count(@$raumArray) > 0){
                               foreach($raumArray as $raum){
                                   $selected = "";
-                                  if($raum != null && $raum->r_id == $ausgewaehlterRaumArt->kar_id){
+                                  if($raum != null && $raum->r_id == @$ausgewaehlterRaumArt->kar_id){
                                       $selected = "selected";
                                   } else {
                                       $selected = "";
@@ -132,7 +133,7 @@ require_once "../database_entities/Benutzer.php"
                           <select name="Lieferant" class="form-control" id="Lieferant" required>
                               <!-- Repeat für alle Komponentenarten -->
                                <?php
-                              if(count($lieferantArray) > 0){
+                              if(count(@$lieferantArray) > 0){
                                   foreach($lieferantArray as $lieferant){
                                       $selected = "";
                                       if($lieferant != null && $lieferant->l_id == $ausgewaehlterLieferant->l_id){
@@ -179,6 +180,10 @@ require_once "../database_entities/Benutzer.php"
               </form>
           </div>
         </div>
+
+      <?php else: ?>
+          <label style="color:red; font-weight: bold;">Sie sind nicht Berechtigt diese Webseite zu benutzen.</label>
+      <?php endif; ?>
       </div>
 </main>
 <?php

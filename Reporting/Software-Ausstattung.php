@@ -8,7 +8,7 @@ require_once "../header.php";
                 <h2>Software-Ausstattung</h2>
             </div>
             <hr class="trenner">
-            <?php if($_SESSION["Benutzer"] instanceof BenutzerExtra): ?>
+            <?php if(@$_SESSION["Benutzer"] instanceof BenutzerExtra): ?>
                 <div class="row">
                 <div class="col-md-2">
                   <!-- Form um Raum zu suchen -->

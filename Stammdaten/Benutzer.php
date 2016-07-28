@@ -4,7 +4,7 @@ require_once '../database_entities/Benutzer.php';
 require_once '../database_entities/Rollen.php';
 require_once '../module/rollenmodul/RollenDBAdapter.php';
 require_once '../module/benutzermodul/BenutzerDBAdapter.php';
-session_start();
+@@session_start();
 
 $statusInsert = null;
 $statusUpdate = null;
@@ -18,6 +18,7 @@ $zuAendernderBenutzer = null;
 $alleRollen = $rollenDBAdapter->selectRollen();
 if(isset($_POST["insert"])){
     $benutzer = new Benutzer();
+    $benutzer->be_id = 0;
     $benutzer->be_login = $_POST["login"];
     $benutzer->be_pwd = $_POST["pwd"];
     $benutzer->be_vorname = "May be implemented";
@@ -69,7 +70,7 @@ $alleBenutzer = $benutzerDBAdapter->selectBenutzer();
                     <p><a class="nav-link" href="#hinzu">Hinzufügen</a> // <a class="nav-link" href="#aend">Ändern</a> // <a class="nav-link" href="#del">Löschen</a></p>
                 </div>
                 <hr class="trenner">
-                <?php if($_SESSION["Benutzer"] instanceof BenutzerExtra && $_SESSION["Benutzer"]->darfAlles): ?>
+                <?php if(@$_SESSION["Benutzer"] instanceof BenutzerExtra && $_SESSION["Benutzer"]->darfAlles): ?>
                     <div class="row">
                     <div class="col-md-8 col-md-offset-2">
                         <h3 id="hinzu">Benutzer hinzufügen</h3>

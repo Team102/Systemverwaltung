@@ -45,7 +45,7 @@ if(isset($_POST["raumsenden"])){
             <h2>Wartung</h2>
         </div>
         <hr class="trenner">
-        <?php if($_SESSION["Benutzer"] instanceof BenutzerExtra && $_SESSION["Benutzer"]->darfAlles): ?>
+        <?php if(@$_SESSION["Benutzer"] instanceof BenutzerExtra && $_SESSION["Benutzer"]->darfAlles): ?>
             <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <h3 id="hinzu">Gerät Warten</h3>

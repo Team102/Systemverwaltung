@@ -37,7 +37,7 @@ if(isset($_POST["search"])){
             <h2>Hardware-Ausstattung</h2>
         </div>
         <hr class="trenner">
-        <?php if($_SESSION["Benutzer"] instanceof BenutzerExtra): ?>
+        <?php if(@$_SESSION["Benutzer"] instanceof BenutzerExtra): ?>
         <div class="row">
             <div class="col-md-2">
               <!-- Form um Komponentenart zu suchen -->
