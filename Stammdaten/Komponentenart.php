@@ -10,6 +10,7 @@ require_once '../header.php';
                     <p><a class="nav-link" href="#hinzu">Hinzufügen</a> // <a class="nav-link" href="#aend">Ändern</a> // <a class="nav-link" href="#del">Löschen</a></p>
                 </div>
                 <hr class="trenner">
+                <?php if($_SESSION["Benutzer"] instanceof BenutzerExtra): ?>
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
                         <h3 id="hinzu">Komponentenart hinzufügen</h3>
@@ -73,6 +74,10 @@ require_once '../header.php';
                             </form>
                         </div>
                       </div>
+
+                <?php else: ?>
+                    <label style="color:red; font-weight: bold;">Sie sind nicht Berechtigt diese Webseite zu benutzen.</label>
+                <?php endif; ?>
             </div>
         </main>
   <?php
