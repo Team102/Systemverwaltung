@@ -1,5 +1,11 @@
 <?php
-require_once '../header.php';
+require_once (__DIR__ . '/../header.php');
+require_once (__DIR__ . '/../database_entities/Benutzer.php');
+require_once (__DIR__ . '/../database_entities/KomponentenArten.php');
+require_once (__DIR__ . '/../database_entities/Wird_Beschrieben_Durch.php');
+require_once (__DIR__ . '/../database_entities/KomponentenAttribute.php');
+require_once (__DIR__ . '/../module/komponentenattribute/KomponentenattributeDBAdapter.php');
+require_once (__DIR__ . '/../module/Komponentenarten/KomponentenartenDBAdapter.php');
  ?>
         <main>
             <div class="container">
@@ -7,6 +13,13 @@ require_once '../header.php';
                 <div class="headline">
                     <h2>Komponentenzuweisung</h2>
                 </div>
+                
+                <?php
+                $ausgewaehlteKomponentenArt;
+                $AttributeAdapter = new KomponentenAttributeDBAdapter();
+                $VorhandeneAttribute = $AttributeAdapter->selectKomponentenAttribute();
+                
+                ?>
                 <hr class="trenner">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
@@ -17,14 +30,39 @@ require_once '../header.php';
                             <label for="komponenten">Komponentenart:</label>
                             <select class="form-control" name="" id="komponenten">
                               <!-- Repeat für alle Komponentenart -->
-                              <option value="">ID - Komponentenart</option>
+                               <?php
+                                $dbAdapter = new KomponentenartenDBAdapter(null);
+                                $KomponentenArten = $dbAdapter->selectKomponentenarten();
+                                foreach($KomponentenArten as $KompnentenArt)
+                                {
+                                    $selected;
+                                    if($ausgewaehlteKomponentenArt != null && $ausgewaehlteKomponentenArt->kar_id == $KompnentenArt->kar_id)
+                                    {
+                                        $selected = "selected";
+                                    }
+                                    else
+                                    {
+                                        $selected = "";
+                                    }
+                                    echo "<option $selected value='$KompnentenArt->kar_id'>$KompnentenArt->kar_id - $KompnentenArt->kar_bezeichnung</option>";
+                                }
+                                ?>
                             </select>
                           </fieldset>
                           <fieldset class="form-group">
                             <label>
                               <!-- Repeat für alle Attribute -->
-                              <input type="checkbox" name="" value="">Attribut 1
-                              <br />
+                              
+                              <?php
+                              foreach($VorhandeneAttribute as $KomponentenAttribute)
+                              {
+                                  
+                                  echo "<input type='checkbox' name='$KomponentenAttribute->kat_id' value='$KomponentenAttribute->kat_id - $KomponentenAttribute->kat_bezeichnung'>Attribut 1";
+                                  echo"<br />";
+                              }
+                              ?>
+                              
+                              
                               <!-- /Repeat -->
                             </label>
                           </fieldset>

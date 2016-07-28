@@ -6,8 +6,8 @@
  * Date: 25.07.2016
  * Time: 14:08
  */
-require_once("module/baseDbAdapter.php");
-require_once("database_entities/KomponentenAttribute.php");
+require_once(__DIR__ . "/../baseDbAdapter.php");
+require_once(__DIR__ . "/../../database_entities/KomponentenAttribute.php");
 class KomponentenAttributeDBAdapter extends baseDbAdapter
 {
 
@@ -55,7 +55,7 @@ class KomponentenAttributeDBAdapter extends baseDbAdapter
      * @param $KomponentenAttribute KomponentenAttribute zu löschender KomponentenAttribute
      */
     function deleteKomponentenAttribute($KomponentenAttribute){
-        $this->delete("KomponentenAttribute", "kat_id = $KomponentenAttribute->kat_id");
+        $this->delete("komponentenattribute", "kat_id = $KomponentenAttribute->kat_id");
     }
 
     /**
