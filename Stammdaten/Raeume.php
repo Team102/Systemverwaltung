@@ -23,7 +23,7 @@ require_once "../module/Raummodul/RaumDBAdapter.php";
 
     } else if(isset($_POST["search"])){
         $zuSuchendeId = $_POST["searchfield"];
-        $alleRaeume = $dbAdapter->selectRaum();
+        $alleRaeume = $dbAdapter->selectRaeume();
         foreach($alleRaeume as $raum){
             if($raum->r_id == $zuSuchendeId){
                 $zuAendernderRaum = $raum;
@@ -47,7 +47,7 @@ require_once "../module/Raummodul/RaumDBAdapter.php";
         $statusDelete = "Der Raum wurde erfolgreich gelöscht";
     }
 
-    $alleRaeume = $dbAdapter->selectRaum();
+    $alleRaeume = $dbAdapter->selectRaeume();
 
 
 ?>

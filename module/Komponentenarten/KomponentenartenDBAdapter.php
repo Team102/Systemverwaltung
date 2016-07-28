@@ -6,8 +6,8 @@
  * Date: 25.07.2016
  * Time: 14:08
  */
-require_once("module/baseDbAdapter.php");
-require_once("database_entities/KomponentenArten.php");
+require_once(__DIR__ . "/../baseDbAdapter.php");
+require_once(__DIR__ . "/../../database_entities/KomponentenArten.php");
 class KomponentenartenDBAdapter extends baseDbAdapter
 {
 
@@ -68,5 +68,20 @@ class KomponentenartenDBAdapter extends baseDbAdapter
         $komponentenarten->kar_id = $row["kar_id"];
         $komponentenarten->kar_bezeichnung = $row["kar_bezeichnung"];
         return $komponentenarten;
+    }
+
+    /**
+     * selektiert eine einzelne Komponente
+     * @param $id int die zu suchende ID
+     * @return KomponentenArten|int;
+     */
+    public function selectKomponentenartById($id){
+        $sql = "SELECT * FROM komponentenarten WHERE kar_id = $id";
+        $allekomponentenarten = $this->execSQL($sql);
+        //TODO erfragen wie ich an den error komme
+        if($allekomponentenarten == -1){
+            return -1;
+        }
+        return($this->getkomponentenartenFromAssocArray($allekomponentenarten[0]));
     }
 }

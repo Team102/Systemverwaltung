@@ -8,83 +8,158 @@
 class komponente
 {
     private $k_id;
+    private $k_bezeichnung;
     private $r_id;
     private $l_id;
     private $b_id;
     private $k_gewaehrleistungsdauer;
-    private $k_notitz;
+    private $k_notiz;
     private $k_hersteller;
     private $kar_id;
-    
-    public function getK_ID()
+
+    /**
+     * @return mixed
+     */
+    public function getKId()
     {
         return $this->k_id;
     }
-    
-    public function setK_ID($k_id)
+
+    /**
+     * @param mixed $k_id
+     */
+    public function setKId($k_id)
     {
         $this->k_id = $k_id;
     }
-    
-    public function getR_ID()
+
+    /**
+     * @return mixed
+     */
+    public function getRId()
     {
         return $this->r_id;
     }
-    public function setR_ID($r_id)
+
+    /**
+     * @param mixed $r_id
+     */
+    public function setRId($r_id)
     {
         $this->r_id = $r_id;
     }
-    
-    public function getL_ID()
+
+    /**
+     * @return mixed
+     */
+    public function getLId()
     {
         return $this->l_id;
     }
-    public function setL_ID($l_id)
+
+    /**
+     * @param mixed $l_id
+     */
+    public function setLId($l_id)
     {
         $this->l_id = $l_id;
     }
-    
-    public function getB_ID()
+
+    /**
+     * @return mixed
+     */
+    public function getBId()
     {
         return $this->b_id;
     }
-    public function setB_ID($b_id)
+
+    /**
+     * @param mixed $b_id
+     */
+    public function setBId($b_id)
     {
         $this->b_id = $b_id;
     }
-    
-    public function getK_Geweahrleistungen()
+
+    /**
+     * @return mixed
+     */
+    public function getKGewaehrleistungsdauer()
     {
         return $this->k_gewaehrleistungsdauer;
     }
-    public function setK_Geweahrleistungen($k_gewaehrleistungsdauer)
+
+    /**
+     * @param mixed $k_gewaehrleistungsdauer
+     */
+    public function setKGewaehrleistungsdauer($k_gewaehrleistungsdauer)
     {
         $this->k_gewaehrleistungsdauer = $k_gewaehrleistungsdauer;
     }
-    
-    public function getK_Notitz()
+
+    /**
+     * @return mixed
+     */
+    public function getKNotiz()
     {
-        return $this->k_notitz;
+        return $this->k_notiz;
     }
-    public function setK_Notitz($k_notitz)
+
+    /**
+     * @param mixed $k_notiz
+     */
+    public function setKNotiz($k_notiz)
     {
-        $this->k_notitz = $k_notitz;
+        $this->k_notiz = $k_notiz;
     }
-    
-    public function getK_Hersteller()
+
+    /**
+     * @return mixed
+     */
+    public function getKHersteller()
     {
         return $this->k_hersteller;
     }
-    public function setK_Hersteller($k_hersteller)
+
+    /**
+     * @param mixed $k_hersteller
+     */
+    public function setKHersteller($k_hersteller)
     {
         $this->k_hersteller = $k_hersteller;
     }
-    public function getKAR_ID()
+
+    /**
+     * @return mixed
+     */
+    public function getKarId()
     {
         return $this->kar_id;
     }
-    public function setKAR_ID($kar_id)
+
+    /**
+     * @param mixed $kar_id
+     */
+    public function setKarId($kar_id)
     {
         $this->kar_id = $kar_id;
     }
+
+
+    /**
+     * @return mixed
+     */
+    public function getKBezeichnung()
+    {
+        return $this->k_bezeichnung;
+    }
+
+    /**
+     * @param mixed $k_bezeichnung
+     */
+    public function setKBezeichnung($k_bezeichnung)
+    {
+        $this->k_bezeichnung = $k_bezeichnung;
+    }
+
 }

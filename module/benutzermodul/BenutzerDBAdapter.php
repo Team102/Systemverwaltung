@@ -8,6 +8,9 @@
  */
 
 require_once(__DIR__ . "/../baseDbAdapter.php");
+require_once(__DIR__ . "/../Komponentenmodul/komponentenDbAdapter.php");
+require_once(__DIR__ . "/../baseDbAdapter.php");
+require_once(__DIR__ . "/../../database_entities/komponente.php");
 require_once(__DIR__ . "/../../database_entities/Benutzer.php");
 class BenutzerDBAdapter extends baseDbAdapter
 {

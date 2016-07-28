@@ -5,6 +5,79 @@ require_once "../database_entities/Benutzer.php";
 require_once "../database_entities/Lieferant.php";
 require_once "../module/Lieferantenmodul/LieferantenDBAdapter.php";
 session_start();
+//hinzufuegen Lieferant
+function getLieferant(){
+    $lieferant = new Lieferant();
+    $firmenname = $_POST["firmenname"];
+    $strasse = $_POST["strasse"];
+    $plz = $_POST["plz"];
+    $ort = $_POST["ort"];
+    $tel = $_POST["tel"];
+    $mobil = $_POST["mobil"];
+    $fax = $_POST["fax"];
+    $mail = $_POST["mail"];
+
+    $lieferant->l_firmenname = $firmenname;
+    $lieferant->l_strasse = $strasse;
+    $lieferant->l_plz = $plz;
+    $lieferant->l_ort = $ort;
+    $lieferant->l_tel = $tel;
+    $lieferant->l_mobil = $mobil;
+    $lieferant->l_fax = $fax;
+    $lieferant->l_email = $mail;
+    return $lieferant;
+}
+
+//Lieferant ändern part
+//hole Liste von allen Lieferanten
+if($dbAdapter == null){
+    $dbAdapter = new LieferantenDBAdapter(null);
+}
+
+$status = "";
+$ausgewaehlterLieferant = null;
+$statusError = "";
+$bereitsGeladen = false;
+
+if(isset($_POST["btnHinzu"])){
+    //TODO check for errors
+    $lieferant = getLieferant();
+    var_dump($lieferant);
+    $dbAdapter = new LieferantenDBAdapter(null);
+//    $id = $dbAdapter->insertLieferant($lieferant);
+
+    $infoString = "Neuer Lieferant mit der Id: " . $id . " wurde in die Datenbank eingefügt";
+} else if(isset($_POST["delete"])){
+    if($dbAdapter != null){
+        $dbAdapter = new LieferantenDBAdapter(null);
+    }
+    $lieferant = new Lieferant();
+    $lieferant->l_id = $_POST["deleteField"];
+    $dbAdapter->deleteLieferant($lieferant);
+    $statusError = "Der Nutzer wurde erfolgreich gelöscht";
+} else if(isset($_POST["btnAend"])){
+    $lieferant = getLieferant();
+    $lieferant->l_id = $_POST["id"];
+    $dbAdapter->updateLieferant($lieferant);
+    $ausgewaehlterLieferant = $lieferant;
+    $status = "Lieferant erfolgreich geändert!";
+} else if(isset($_POST["searchSubmit"])){
+    //ändere Lieferant
+    $bereitsGeladen = true;
+    $lieferantenArray = $dbAdapter->selectLieferanten();
+    $zuSuchendeId = $_POST["searchfield"];
+    foreach($lieferantenArray as $lieferant){
+        if($lieferant->l_id == $zuSuchendeId){
+            echo "gefunden!";
+            $ausgewaehlterLieferant = $lieferant;
+            break;
+        }
+    }
+}
+if(!$bereitsGeladen){
+    $lieferantenArray = $dbAdapter->selectLieferanten();
+}
+
 ?>
 <!-- Hauptseite -->
   <main>
@@ -20,83 +93,6 @@ session_start();
           </div>
           <!-- Trennlinie -->
           <!-- Hier eventuell Rechtemäßig abfragen und Ein, oder Ausbleden lassen -->
-
-
-          <?php
-          //hinzufuegen Lieferant
-          function getLieferant(){
-              $lieferant = new Lieferant();
-              $firmenname = $_POST["firmenname"];
-              $strasse = $_POST["strasse"];
-              $plz = $_POST["plz"];
-              $ort = $_POST["ort"];
-              $tel = $_POST["tel"];
-              $mobil = $_POST["mobil"];
-              $fax = $_POST["fax"];
-              $mail = $_POST["mail"];
-
-              $lieferant->l_firmenname = $firmenname;
-              $lieferant->l_strasse = $strasse;
-              $lieferant->l_plz = $plz;
-              $lieferant->l_ort = $ort;
-              $lieferant->l_tel = $tel;
-              $lieferant->l_mobil = $mobil;
-              $lieferant->l_fax = $fax;
-              $lieferant->l_email = $mail;
-              return $lieferant;
-          }
-
-          if(isset($_POST["btnHinzu"])){
-              //TODO check for errors
-            $lieferant = getLieferant();
-            $dbAdapter = new LieferantenDBAdapter(null);
-            $id = $dbAdapter->insertLieferant($lieferant);
-
-            $infoString = "Neuer Lieferant mit der Id: " . $id . " wurde in die Datenbank eingefügt";
-
-          }
-          //Lieferant ändern part
-          //hole Liste von allen Lieferanten
-          if($dbAdapter == null){
-              $dbAdapter = new LieferantenDBAdapter(null);
-          }
-
-          $status = "";
-          $ausgewaehlterLieferant = null;
-          $statusError = "";
-          $bereitsGeladen = false;
-
-          if(isset($_POST["delete"])){
-              if($dbAdapter != null){
-                  $dbAdapter = new LieferantenDBAdapter(null);
-              }
-              $lieferant = new Lieferant();
-              $lieferant->l_id = $_POST["deleteField"];
-              $dbAdapter->deleteLieferant($lieferant);
-              $statusError = "Der Nutzer wurde erfolgreich gelöscht";
-          } else if(isset($_POST["btnAend"])){
-              $lieferant = getLieferant();
-              $lieferant->l_id = $_POST["id"];
-              $dbAdapter->updateLieferant($lieferant);
-              $ausgewaehlterLieferant = $lieferant;
-              $status = "Lieferant erfolgreich geändert!";
-          } else if(isset($_POST["searchSubmit"])){
-              //ändere Lieferant
-              $bereitsGeladen = true;
-              $lieferantenArray = $dbAdapter->selectLieferanten();
-              $zuSuchendeId = $_POST["searchfield"];
-              foreach($lieferantenArray as $lieferant){
-                  if($lieferant->l_id == $zuSuchendeId){
-                      echo "gefunden!";
-                      $ausgewaehlterLieferant = $lieferant;
-                      break;
-                  }
-              }
-          }
-          if(!$bereitsGeladen){
-              $lieferantenArray = $dbAdapter->selectLieferanten();
-          }
-          ?>
           <hr class="trenner">
                 <div class="row">
                   <!-- Mittig Zentriert -->
