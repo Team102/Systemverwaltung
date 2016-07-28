@@ -69,7 +69,8 @@ $alleBenutzer = $benutzerDBAdapter->selectBenutzer();
                     <p><a class="nav-link" href="#hinzu">Hinzufügen</a> // <a class="nav-link" href="#aend">Ändern</a> // <a class="nav-link" href="#del">Löschen</a></p>
                 </div>
                 <hr class="trenner">
-                <div class="row">
+                <?php if($_SESSION["Benutzer"] instanceof BenutzerExtra && $_SESSION["Benutzer"]->darfAlles): ?>
+                    <div class="row">
                     <div class="col-md-8 col-md-offset-2">
                         <h3 id="hinzu">Benutzer hinzufügen</h3>
                         <!-- Form um Benutzer hinzuzufügen -->
@@ -184,6 +185,10 @@ $alleBenutzer = $benutzerDBAdapter->selectBenutzer();
                             </form>
                         </div>
                       </div>
+
+                <?php else: ?>
+                    <label style="color:red; font-weight: bold;">Sie sind nicht Berechtigt diese Webseite zu benutzen.</label>
+                <?php endif; ?>
             </div>
         </main>
         <?php

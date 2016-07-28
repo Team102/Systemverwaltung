@@ -1,11 +1,12 @@
 <?php
 require_once(__DIR__ . "/../benutzermodul/BenutzerDBAdapter.php");
 require_once(__DIR__ . "/../../database_entities/User.php");
+require_once(__DIR__ . "/../../database_entities/BenutzerExtra.php");
 session_start();
 $benutzer = tryToLogIn($_POST["benutzer"], $_POST["passwort"]);
 //wenn Benutzer zurückkommt, dann ist er angemeldet, ansonsten gab es einen Fehler
 //DIESE FUNKTION FUNKTIONIERT!! ES IST NUR; WEIL DERZEIT EINE DEBUGGMESSAGE GESENDET WIRD!
-if(@$benutzer instanceof Benutzer){
+if(@$benutzer instanceof BenutzerExtra){
     $_SESSION["Benutzer"] = $benutzer;
     header('Location: /index.php');
     exit;
@@ -17,6 +18,29 @@ if(@$benutzer instanceof Benutzer){
     }
     header("Location: /login.php");
     exit;
+}
+
+/**
+ * Diese Methode erstellt einen erweiteren Benutzer,
+ * anhand dessen man überprüfen kann, ob er alles kann.
+ * @param $Benutzer Benutzer
+ * @return BenutzerExtra Benutzer
+ */
+function getNutzerFunctionality($benutzer){
+
+    $benutzerNew = new BenutzerExtra();
+    $benutzerNew->be_id = $benutzer->be_id;
+    $benutzerNew->be_login = $benutzer->be_login;
+    $benutzerNew->be_nachname = $benutzer->be_nachname;
+    $benutzerNew->be_pwd = $benutzer->be_pwd;
+    $benutzerNew->be_rechte = $benutzer->be_rechte;
+
+    if($benutzerNew->be_rechte == 1 || $benutzerNew->be_rechte == 2){
+        $benutzerNew->darfAlles = true;
+    } else {
+        $benutzerNew->darfAlles = false;
+    }
+    return $benutzerNew;
 }
 
 /**
@@ -35,7 +59,7 @@ function tryToLogIn($username, $password){
     if(is_null($benutzer)) return -1;
     //überprüft das übergebene Passwort gegen den in der Datenbank enthaltenen Hashwert
     if(password_verify($password, substr($benutzer->be_pwd, 0, 60))){
-        return $benutzer;
+        return getNutzerFunctionality($benutzer);
     } else {
         return -2;
     }

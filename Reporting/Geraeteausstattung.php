@@ -34,6 +34,7 @@ if(isset($_POST["search"])){
                 <h2>Geräteausstattung</h2>
             </div>
             <hr class="trenner">
+            <?php if($_SESSION["Benutzer"] instanceof BenutzerExtra): ?>
             <div class="row">
                 <div class="col-md-2">
                   <!-- Form um Raum zu suchen -->
@@ -89,6 +90,9 @@ if(isset($_POST["search"])){
                 ?>
                 </tbody>
             </table>
+            <?php else: ?>
+                <label style="color:red; font-weight: bold;">Sie sind nicht Berechtigt diese Webseite zu benutzen.</label>
+            <?php endif; ?>
         </div>
     </main>
 <?php
