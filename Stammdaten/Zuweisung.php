@@ -1,5 +1,11 @@
 <?php
-require_once '../header.php';
+require_once (__DIR__ . '/../header.php');
+require_once (__DIR__ . '/../database_entities/Benutzer.php');
+require_once (__DIR__ . '/../database_entities/KomponentenArten.php');
+require_once (__DIR__ . '/../database_entities/Wird_Beschrieben_Durch.php');
+require_once (__DIR__ . '/../database_entities/KomponentenAttribute.php');
+require_once (__DIR__ . '/../module/komponentenattribute/KomponentenattributeDBAdapter.php');
+require_once (__DIR__ . '/../module/Komponentenarten/KomponentenartenDBAdapter.php');
  ?>
         <main>
             <div class="container">
@@ -7,6 +13,23 @@ require_once '../header.php';
                 <div class="headline">
                     <h2>Komponentenzuweisung</h2>
                 </div>
+                
+                <?php
+                $ausgewaehlteKomponentenArt;
+                $GenutzteAttribute;
+                $AttributeAdapter = new KomponentenAttributeDBAdapter();
+                $WBDAdapter = new WirdbeschriebendurchDBAdapter();
+                $VorhandeneAttribute = $AttributeAdapter->selectKomponentenAttribute();
+                
+                
+                
+                if(isset($_POST["btnSelect"]))
+                {
+                    $IDS = $_POST["searchfield"];
+                    $GenutzteAttribute = $WBDAdapter->wirdBeschriebenDurchByKar($IDS);
+                    
+                }                
+                ?>
                 <hr class="trenner">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
@@ -17,18 +40,59 @@ require_once '../header.php';
                             <label for="komponenten">Komponentenart:</label>
                             <select class="form-control" name="" id="komponenten">
                               <!-- Repeat für alle Komponentenart -->
-                              <option value="">ID - Komponentenart</option>
+                               <?php
+                                $dbAdapter = new KomponentenartenDBAdapter(null);
+                                $KomponentenArten = $dbAdapter->selectKomponentenarten();
+                                foreach($KomponentenArten as $KompnentenArt)
+                                {
+                                    $selected;
+                                    if($ausgewaehlteKomponentenArt != null && $ausgewaehlteKomponentenArt->kar_id == $KompnentenArt->kar_id)
+                                    {
+                                        $selected = "selected";
+                                    }
+                                    else
+                                    {
+                                        $selected = "";
+                                    }
+                                    echo "<option $selected value='$KompnentenArt->kar_id'>$KompnentenArt->kar_id - $KompnentenArt->kar_bezeichnung</option>";
+                                }
+                                ?>
                             </select>
                           </fieldset>
+                            <button type="submit" name="btnSelect" class="btn btn-primary">Auswahlen</button>
+                        </form>
+                        <form method="post" action="../Stammdaten/Zuweisung.php">
                           <fieldset class="form-group">
                             <label>
                               <!-- Repeat für alle Attribute -->
-                              <input type="checkbox" name="" value="">Attribut 1
-                              <br />
+                              
+                              <?php
+                              foreach($VorhandeneAttribute as $KomponentenAttribute)
+                              {
+                                  foreach ($GenutzteAttribute as $KomponentenAttributes)
+                                  {
+                                      if($KomponentenAttribute->kat_id == $KomponentenAttributes->kat_id)
+                                      {
+                                          echo ja;
+                                          echo "<input type='checkbox' checked='checked' name='$KomponentenAttribute->kat_id' value='$KomponentenAttribute->kat_id'>$KomponentenAttribute->kat_bezeichnung";
+                                      }
+                                      else
+                                      {
+                                          echo nein;
+                                          echo "<input type='checkbox' name='$KomponentenAttribute->kat_id' value='$KomponentenAttribute->kat_id'>$KomponentenAttribute->kat_bezeichnung";
+                                      }
+                                  }
+                                  
+                                  echo "<input type='checkbox' name='$KomponentenAttribute->kat_id' value='$KomponentenAttribute->kat_id - $KomponentenAttribute->kat_bezeichnung'>Attribut 1";
+                                  echo"<br />";
+                              }
+                              ?>
+                              
+                              
                               <!-- /Repeat -->
                             </label>
                           </fieldset>
-                          <button type="submit" class="btn btn-primary">Zuweisen</button>
+                            <button type="submit" name="btnConfirm" class="btn btn-primary">Zuweisen</button>
                         </form>
                     </div>
                   </div>
