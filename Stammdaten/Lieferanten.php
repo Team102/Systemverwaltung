@@ -54,7 +54,7 @@ if(isset($_POST["btnHinzu"])){
     $lieferant = new Lieferant();
     $lieferant->l_id = $_POST["deleteField"];
     $dbAdapter->deleteLieferant($lieferant);
-    $statusError = "Der Nutzer wurde erfolgreich gelöscht";
+    $statusError = "Der Lieferant wurde erfolgreich gelöscht";
 } else if(isset($_POST["btnAend"])){
     $lieferant = getLieferant();
     $lieferant->l_id = $_POST["id"];
