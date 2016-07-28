@@ -20,15 +20,31 @@ require_once (__DIR__ . '/../module/Komponentenarten/KomponentenartenDBAdapter.p
                 $AttributeAdapter = new KomponentenAttributeDBAdapter();
                 $WBDAdapter = new WirdbeschriebendurchDBAdapter();
                 $VorhandeneAttribute = $AttributeAdapter->selectKomponentenAttribute();
+                $IDS;
                 
                 
                 
                 if(isset($_POST["btnSelect"]))
                 {
+                    $IDS = "";
                     $IDS = $_POST["searchfield"];
                     $GenutzteAttribute = $WBDAdapter->wirdBeschriebenDurchByKar($IDS);
                     
-                }                
+                } 
+                
+                if(isset($_POST["btnConfirm"]))
+                {
+                    
+                    $WBDAdapter->delete("wird_beschrieben_durch", "WHERE kar_id = " . $IDS);
+                    $SelectedAttribute = [$_POST["checkList"]];
+                    foreach($SelectedAttribute as $Attribut)
+                    {
+                        $WBD = new Wird_Beschrieben_Durch();
+                        $WBD->kar_id = $IDS;
+                        $WBD->kat_id = $Attribut;
+                        $WBDAdapter->insertwirdBeschriebenDurch($WBD);
+                    }
+                }
                 ?>
                 <hr class="trenner">
                 <div class="row">
@@ -38,7 +54,7 @@ require_once (__DIR__ . '/../module/Komponentenarten/KomponentenartenDBAdapter.p
                         <form method="post" action="../Stammdaten/Zuweisung.php">
                           <fieldset class="form-group">
                             <label for="komponenten">Komponentenart:</label>
-                            <select class="form-control" name="" id="komponenten">
+                            <select class="form-control" name="searchfield" id="komponenten">
                               <!-- Repeat für alle Komponentenart -->
                                <?php
                                 $dbAdapter = new KomponentenartenDBAdapter(null);
@@ -73,17 +89,13 @@ require_once (__DIR__ . '/../module/Komponentenarten/KomponentenartenDBAdapter.p
                                   {
                                       if($KomponentenAttribute->kat_id == $KomponentenAttributes->kat_id)
                                       {
-                                          echo ja;
-                                          echo "<input type='checkbox' checked='checked' name='$KomponentenAttribute->kat_id' value='$KomponentenAttribute->kat_id'>$KomponentenAttribute->kat_bezeichnung";
+                                          echo "<input type='checkbox' checked='checked' name='checkList[]' value='$KomponentenAttribute->kat_id'>$KomponentenAttribute->kat_bezeichnung";
                                       }
                                       else
                                       {
-                                          echo nein;
-                                          echo "<input type='checkbox' name='$KomponentenAttribute->kat_id' value='$KomponentenAttribute->kat_id'>$KomponentenAttribute->kat_bezeichnung";
+                                          echo "<input type='checkbox' name='checkList[]' value='$KomponentenAttribute->kat_id'>$KomponentenAttribute->kat_bezeichnung";
                                       }
                                   }
-                                  
-                                  echo "<input type='checkbox' name='$KomponentenAttribute->kat_id' value='$KomponentenAttribute->kat_id - $KomponentenAttribute->kat_bezeichnung'>Attribut 1";
                                   echo"<br />";
                               }
                               ?>
@@ -102,5 +114,5 @@ require_once (__DIR__ . '/../module/Komponentenarten/KomponentenartenDBAdapter.p
             <div class="fa fa-arrow-up"></div>
         </div>
   <?php
-  require_once '../footer.php';
+  require_once __DIR__ . '/../footer.php';
    ?>
