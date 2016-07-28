@@ -6,8 +6,8 @@
  * Date: 25.07.2016
  * Time: 14:08
  */
-require_once("module/baseDbAdapter.php");
-require_once("database_entities/KomponentenArten.php");
+require_once(__DIR__ . "/../baseDbAdapter.php");
+require_once(__DIR__ . "/../../database_entities/KomponentenArten.php");
 class KomponentenartenDBAdapter extends baseDbAdapter
 {
 
