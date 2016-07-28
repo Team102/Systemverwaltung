@@ -111,4 +111,15 @@ class RaumDBAdapter extends baseDbAdapter
         }
         return $raeumeArray;
     }
+
+    /**
+     * Selektiert einen einzelnen Raum
+     * @param $rId int die ID vom Raum
+     * @return Raum der gesuchte raum
+     */
+    public function selectRaumById($rId)
+    {
+        $sql ="SELECT * FROM raeume WHERE r_id = $rId";
+        return $this->execSQL($sql);
+    }
 }

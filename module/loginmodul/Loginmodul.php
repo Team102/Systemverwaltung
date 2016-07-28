@@ -3,12 +3,12 @@ require_once(__DIR__ . "/../benutzermodul/BenutzerDBAdapter.php");
 require_once(__DIR__ . "/../../database_entities/User.php");
 session_start();
 $benutzer = tryToLogIn($_POST["benutzer"], $_POST["passwort"]);
-
 //wenn Benutzer zurückkommt, dann ist er angemeldet, ansonsten gab es einen Fehler
+//DIESE FUNKTION FUNKTIONIERT!! ES IST NUR; WEIL DERZEIT EINE DEBUGGMESSAGE GESENDET WIRD!
 if(@$benutzer instanceof Benutzer){
     $_SESSION["Benutzer"] = $benutzer;
     header('Location: /index.php');
-    die();
+    exit;
 } else {
     if($benutzer == -1){
         $_SESSION["loginErrorMessage"] = "Der Benutzername existiert nicht.";
@@ -16,7 +16,7 @@ if(@$benutzer instanceof Benutzer){
         $_SESSION["loginErrorMessage"] = "Das Passwort ist falsch";
     }
     header("Location: /login.php");
-    die();
+    exit;
 }
 
 /**

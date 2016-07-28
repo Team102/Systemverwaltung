@@ -1,5 +1,34 @@
 <?php
-    require_once "../header.php";
+require_once "../header.php";
+require_once "../database_entities/Raum.php";
+require_once "../database_entities/komponente.php";
+require_once "../database_entities/komponenteMitKarUndRaum.php";
+require_once "../module/Raummodul/RaumDBAdapter.php";
+require_once "../module/Komponentenmodul/komponentenDbAdapter.php";
+
+
+$kompDBAdapter = new kompnenentenDbAdapter(null);
+$kompArtAdapter = new KomponentenartenDBAdapter(null);
+$raumAdapter = new RaumDBAdapter(null);
+
+$alleKomponentenArten = $kompArtAdapter->selectKomponentenarten();
+
+$alleKomponenten = null;
+$ausgewaehlteKompArt = null;
+
+if(isset($_POST["search"])){
+    $kompId = $_POST["select"];
+    foreach ($alleKomponentenArten as $komponentenArt){
+        if($kompId == $komponentenArt){
+            $ausgewaehlteKompArt = $komponentenArt;
+            break;
+        }
+    }
+
+    //TODO2: Wartung-> machen, dass ist noch nicht fertig
+    $alleKomponenten = $kompDBAdapter->getKomponentenByArt($kompId);
+    $alleKomponenten = $kompDBAdapter->insertKompoRaumBezeichnung($alleKomponenten);
+}
 ?>
 <main>
     <div class="container">
@@ -14,12 +43,21 @@
                 <form method="post" action="../Reporting/Hardware-Ausstattung.php">
                     <fieldset class="form-group">
                         <label for="select1">Komponente suchen:</label>
-                        <select class="form-control" id="select1">
+                        <select class="form-control" id="select1" name="select">
                           <!-- Repeat für alle Komponentenarten -->
-                            <option value="Laptop">Laptop</option>
+                            <?php
+                                foreach ($alleKomponentenArten as $kompArt){
+                                    if($kompId != null && $kompId == $kompArt->kar_id){
+                                        $selected = "selected";
+                                    } else {
+                                        $selected = "";
+                                    }
+                                    echo "<option value='$kompArt->kar_id'>$kompArt->kar_bezeichnung</option>";
+                                }
+                            ?>
                         </select>
                     </fieldset>
-                    <button style="width:100%;" type="submit" class="btn btn-primary">Suchen</button>
+                    <button style="width:100%;" type="submit" class="btn btn-primary" name="search">Suchen</button>
                 </form>
             </div>
         </div>
@@ -30,25 +68,27 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Art</th>
+                <th>Raum</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Apple MacBook Pro 15</td>
-                <td>Laptop</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Acer Aspire 15G</td>
-                <td>Laptop</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Irgend ein Laptop</td>
-                <td>Laptop</td>
-            </tr>
+            <?php
+            if(count($alleKomponenten) > 0) {
+                foreach ($alleKomponenten as $komponente) {
+                    echo "<tr>";
+                    echo "<td>" . $komponente->getKId() . "</td>";
+                    echo "<td>" . $komponente->getKBezeichnung() . "</td>";
+                    echo "<td>" . $komponente->getRId() . "</td>";
+                    echo "</tr>";
+                }
+            } else {
+                echo "<tr>";
+                echo "<td>----</td>";
+                echo "<td>Keine Geräte dieser Art vorhanden</td>";
+                echo "<td>----</td>";
+                echo "</tr>";
+            }
+            ?>
             </tbody>
         </table>
       </div>

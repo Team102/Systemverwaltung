@@ -7,15 +7,15 @@
 
 class komponente
 {
-    private $k_id;
-    private $k_bezeichnung;
-    private $r_id;
-    private $l_id;
-    private $b_id;
-    private $k_gewaehrleistungsdauer;
-    private $k_notiz;
-    private $k_hersteller;
-    private $kar_id;
+    public $k_id;
+    public $k_bezeichnung;
+    public $r_id;
+    public $l_id;
+    public $b_id;
+    public $k_gewaehrleistungsdauer;
+    public $k_notiz;
+    public $k_hersteller;
+    public $kar_id;
 
     /**
      * @return mixed

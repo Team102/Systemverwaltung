@@ -9,6 +9,7 @@ require_once "../module/Komponentenmodul/komponentenDbAdapter.php";
 $raumDBAdapter = new RaumDBAdapter(null);
 $kompoDBAdapter = new kompnenentenDbAdapter(null);
 
+$alleRaeume = $raumDBAdapter->selectRaeume();
 $alleRaeume = $raumDBAdapter->selectRaeumeOhneFiktivenRaum();
 
 $alleKomponenten = null;
@@ -17,12 +18,13 @@ $ausgewaehlterRaum = null;
 
 $statusDelete = null;
 if(isset($_POST["ausmustern"])){
-    var_dump($_POST);
     $alleZuLoeschendenIds = $_POST["checkList"];
     $raumId = $_POST["hiddenRaum"];
     foreach($alleZuLoeschendenIds as $id){
+        echo "<br/> $id <br/>";
         $komponente = new komponente();
-        $komponente->setKId($id);
+        $komponente->k_id = $id;
+        $komponente = $kompoDBAdapter->getKompneneteById($komponente);
         $kompoDBAdapter->deleteKomponenteById($komponente);
     }
     $statusDelete = "Erfolgreich ausgemustert";
@@ -58,7 +60,6 @@ if(isset($_POST["ausmustern"])){
                           <!-- Repeat für alle Räume -->
                         <?php
                             foreach($alleRaeume as $raum){
-
                                 if($raumId != null && $raumId == $raum->r_id){
                                     $selected = "selected";
                                 } else {
@@ -73,18 +74,22 @@ if(isset($_POST["ausmustern"])){
                       <button type="submit" class="btn btn-primary" name="raumsenden">Geräte Anzeigen</button>
                     </form>
                     <div class="spacer"></div>
-                    <!-- Form um Produkte auszumustern --> 
+                    <!-- Form um Produkte auszumustern -->
                     <form method="post" action="../Produktpflege/Ausmusterung.php">
                         <input type="hidden" hidden="hidden" name="hiddenRaum" value="<?php echo $ausgewaehlterRaum->r_id;?>">
                         <label><?php echo @$statusDelete; ?></label>
                       <div class="checkbox">
                           <?php
-                          if($ausgewaehlterRaum != null){
-                            foreach ($alleKomponenten as $komponente){
-                                echo "<label>";
-                                echo "<input type='checkbox' name='checkList[]' value='".$komponente->getKId()."'> Id: " .$komponente->getKId()  ." -- " .$komponente->getKarBezeichnung() . " --&gt; ". $komponente->getKBezeichnung();
-                                echo "</label><br/>";
-                            }
+                          if($ausgewaehlterRaum != null) {
+                              if (count($alleKomponenten) > 0) {
+                                  foreach ($alleKomponenten as $komponente) {
+                                      echo "<label>";
+                                      echo "<input type='checkbox' name='checkList[]' value='" . $komponente->getKId() . "'> Id: " . $komponente->getKId() . " -- " . $komponente->getKarBezeichnung() . " --&gt; " . $komponente->getKBezeichnung();
+                                      echo "</label><br/>";
+                                  }
+                              } else {
+                                  echo "Dieser Raum besitzt keine Geräte!";
+                              }
                           } else {
                               echo "Bitte wählen Sie einen Raum aus!";
                           }

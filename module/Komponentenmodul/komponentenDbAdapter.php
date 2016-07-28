@@ -7,8 +7,9 @@
 
 require_once(__DIR__ . "/../baseDbAdapter.php");
 require_once(__DIR__ . "/../Komponentenarten/KomponentenartenDBAdapter.php");
+require_once(__DIR__ . "/../Raummodul/RaumDBAdapter.php");
 require_once(__DIR__ . "/../../database_entities/KomponentenArten.php");
-require_once(__DIR__ . "/../../database_entities/komponenteMitKarBezeichnung.php");
+require_once(__DIR__ . "/../../database_entities/komponenteMitKarUndRaum.php");
 
 class kompnenentenDbAdapter extends baseDbAdapter
 {
@@ -47,9 +48,10 @@ class kompnenentenDbAdapter extends baseDbAdapter
     function getKompneneteById($komponente)
     {
         $query = "SELECT * FROM komponenten WHERE k_id = " . $komponente->getKId();
-        $results = $this->execSQL($query); 
+        $results = $this->execSQL($query);
         $result = $results[0];
         $komp = new komponente();
+        $komp->setKId($result["k_id"]);
         $komp->setKBezeichnung($result["k_bezeichnung"]);
         $komp->setBId($result["b_id"]);
         $komp->setLId($result["l_id"]);
@@ -62,12 +64,14 @@ class kompnenentenDbAdapter extends baseDbAdapter
     }
 
     /**
+     * setzt eine komponente als Ausgemuster
      * @param $komponente komponente
      */
     function deleteKomponenteById($komponente)
     {
         $id = $komponente->getKId();
-        $this->delete("komponenten", "k_id = " . $id);
+        $komponente->setRId(-1);
+        $this->update("komponenten", $komponente, "k_id = " . $id);
         echo "NICE!";
     }
 
@@ -103,7 +107,7 @@ class kompnenentenDbAdapter extends baseDbAdapter
      */
     public function getKomponentenByRaum($raumId){
         $kompnenetenList = [];
-        $query = "SELECT * FROM komponenten WHERE r_id = $raumId";
+        $query = "SELECT * FROM komponenten WHERE r_id = $raumId ORDER BY r_id";
         $results = $this->execSQL($query);
         foreach ($results as $result)
         {
@@ -126,7 +130,7 @@ class kompnenentenDbAdapter extends baseDbAdapter
     /**
      * Fügt in jede Komponente die bezeichnung aus der komponentenartentabelle hinzu
      * @param $alleKomponenten array|komponente
-     * @return array|komponenteMitKarBezeichnung
+     * @return array|komponenteMitKarUndRaum
      */
     public function insertKompoKarBezeichnung($alleKomponenten)
     {
@@ -136,9 +140,50 @@ class kompnenentenDbAdapter extends baseDbAdapter
             //selektiere als erstes die komponentenArt
             $komponentenArt = $kompartCrud->selectKomponentenartById($komponente->getKarId());
             //erstelle eine komponente die die komponente erweitert um das Feld Komponentenart Bezeichnung
-            $komponentenMitKompArtBezeichnung = new komponenteMitKarBezeichnung($komponente);
+            $komponentenMitKompArtBezeichnung = new komponenteMitKarUndRaum($komponente);
             //setze die Komponentenart Bezeichnung mithilfe des Selects, dass wir vorher ausgeführt haben
             $komponentenMitKompArtBezeichnung->setKarBezeichnung($komponentenArt->kar_bezeichnung);
+            //adde dieses zum array
+            $alleKompMitKompArtBezeichnung[] = $komponentenMitKompArtBezeichnung;
+        }
+        return $alleKompMitKompArtBezeichnung;
+    }
+
+    public function getKomponentenByArt($kompArtId)
+    {
+        $kompnenetenList = [];
+        $query = "SELECT * FROM komponenten WHERE kar_id = $kompArtId ORDER BY r_id";
+        $results = $this->execSQL($query);
+        foreach ($results as $result)
+        {
+            $komp = new komponente();
+            $komp->setKId($result["k_id"]);
+            $komp->setKBezeichnung($result["k_bezeichnung"]);
+            $komp->setBId($result["b_id"]);
+            $komp->setLId($result["l_id"]);
+            $komp->setRId($result["r_id"]);
+            $komp->setKNotiz($result["k_notitz"]);
+            $komp->setKGewaehrleistungsdauer($result["k_gewaehrleistungen"]);
+            $komp->setKHersteller($result["k_hersteller"]);
+            $komp->setKarId($result["kar_id"]);
+
+            $kompnenetenList[] = $komp;
+        }
+        return $kompnenetenList;
+    }
+
+    public function insertKompoRaumBezeichnung($alleKomponenten)
+    {
+        $alleKompMitKompArtBezeichnung = array();
+        $raumDBAdapter = new RaumDBAdapter(null);
+        foreach($alleKomponenten as $komponente){
+            //selektiere als erstes die komponentenArt
+            $raum = $raumDBAdapter->selectRaumById($komponente->getRId());
+
+            //erstelle eine komponente die die komponente erweitert um das Feld Komponentenart Bezeichnung
+            $komponentenMitKompArtBezeichnung = new komponenteMitKarUndRaum($komponente);
+            //setze die Komponentenart Bezeichnung mithilfe des Selects, dass wir vorher ausgeführt haben
+            $komponentenMitKompArtBezeichnung->setRNr($raum->r_bez);
             //adde dieses zum array
             $alleKompMitKompArtBezeichnung[] = $komponentenMitKompArtBezeichnung;
         }
