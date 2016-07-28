@@ -7,6 +7,7 @@ require_once (__DIR__ . '/../database_entities/KomponentenAttribute.php');
 require_once (__DIR__ . '/../module/komponentenattribute/KomponentenattributeDBAdapter.php');
 require_once (__DIR__ . '/../module/Komponentenarten/KomponentenartenDBAdapter.php');
  ?>
+
         <main>
             <div class="container">
                 <div class="spacer"></div>
