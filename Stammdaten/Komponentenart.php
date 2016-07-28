@@ -42,7 +42,7 @@ session_start();
                                 $KompArt->kar_bezeichnung = $_POST["name"];
                                 $dbAdapter->updatekomponentenarten($KompArt);
                                 $ausgewaehlteKomponentenArt = $KompArt;
-                                $status = "Komponenten Attribut erfolgreich geändert!";
+                                $status = "Komponenten Art erfolgreich geändert!";
 
                                 }
                                 
@@ -51,7 +51,7 @@ session_start();
                             $KompArt = new KomponentenArten();
                             $KompArt->kar_id = $_POST["deleteField"];
                             $dbAdapter->deletekomponentenarten($KompArt);
-                            $statusError = "Das Komponenten Attribut wurde erfolgreich gelöscht";
+                            $statusError = "Das Komponenten Art wurde erfolgreich gelöscht";
                             
                         }
                         if(isset($_POST["searchSubmit"]))
