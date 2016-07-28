@@ -7,8 +7,8 @@
  * Date: 26.07.2016
  * Time: 13:05
  */
-require_once("module/baseDbAdapter.php");
-require_once("database_entities/Raum.php");
+require_once(__DIR__ ."/../baseDbAdapter.php");
+require_once(__DIR__ ."/../../database_entities/Raum.php");
 class RaumDBAdapter extends baseDbAdapter
 {
     /**
@@ -16,7 +16,7 @@ class RaumDBAdapter extends baseDbAdapter
      * @return mixed array[Raum] oder einer der folgenden Fehlercodes
      * -1 = Fehler beim ausführen des SQL
      */
-    function selectRaum(){
+    function selectRaeume(){
         $sql = "SELECT * FROM raeume";
         $alleRaeume = $this->execSQL($sql);
         //TODO erfragen wie ich an den error komme
@@ -33,9 +33,10 @@ class RaumDBAdapter extends baseDbAdapter
     /**
      * Fügt den Raum hinzu
      * @param $raum Raum welcher Raum hinzugefügt werden soll
+     * @return int die erstellte ID;
      */
     function insertRaum($raum){
-        $this->insert("raeume", $raum);
+        return $this->insert("raeume", $raum);
     }
 
     /**
@@ -52,8 +53,10 @@ class RaumDBAdapter extends baseDbAdapter
      * @param $raum Raum welcher Lieferant upgedated werden soll
      */
     function updateRaum($raum){
-        unset($raum->l_id);
-        $this->update("raeume", $raum, "r_id = $raum->r_id");
+        $id = $raum->r_id;
+        unset($raum->r_id);
+        $this->update("raeume", $raum, "r_id = $id");
+        $raum->r_id = $id;
 
     }
 
@@ -88,5 +91,24 @@ class RaumDBAdapter extends baseDbAdapter
         $raum->r_bezeichnung = $row["r_bezeichnung"];
         $raum->r_notiz = $row["r_notiz"];
         return $raum;
+    }
+
+    /**
+     * Selektiert alle Räume ohne den fiktiven ausgemustert raum
+     * @return array|Raum alle räume ohne fiktiven ausgemustert raum
+     */
+    public function selectRaeumeOhneFiktivenRaum()
+    {
+        $sql = "SELECT * FROM raeume WHERE r_id != -1";
+        $alleRaeume = $this->execSQL($sql);
+        //TODO erfragen wie ich an den error komme
+        if($alleRaeume == -1){
+            return -1;
+        }
+        $raeumeArray = array();
+        foreach($alleRaeume as $row){
+            $raeumeArray[] = $this->getRaeumeFromAssocArray($row);
+        }
+        return $raeumeArray;
     }
 }

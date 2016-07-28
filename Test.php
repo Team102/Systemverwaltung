@@ -6,9 +6,9 @@
  * Time: 10:46
  */
 //require_once("module/benutzermodul/BenutzerDBAdapter.php");
-require_once("module/Lieferantenmodul/LieferantenDBAdapter.php");
-require_once("database_entities/Benutzer.php");
+require_once("database_entities/Rollen.php");
 require_once("database_entities/User.php");
+require_once("module/rollenmodul/RollenDBAdapter.php");
 //require_once("module/loginmodul/Loginmodul.php");
 ?>
 
@@ -22,8 +22,8 @@ require_once("database_entities/User.php");
 
     <?php
 
-        $user = new User("root", "");
-        $lieferantDbAdapter = new LieferantenDBAdapter($user);
+//        $user = new User("root", "");
+//        $lieferantDbAdapter = new LieferantenDBAdapter($user);
 //        $lieferant = new Lieferant();
 //        $lieferant->l_firmenname = "firmaname";
 //        $lieferant->l_email = "email";
@@ -35,14 +35,27 @@ require_once("database_entities/User.php");
 //        $lieferant->l_mobil= "mobil";
 //        $i = $lieferantDbAdapter->insertLieferant($lieferant);
 //        echo $i;
-        $alleLiefer = $lieferantDbAdapter->selectLieferanten();
-        echo count($alleLiefer);
-        var_dump($alleLiefer);
-        foreach($alleLiefer as $lieferant){
-            echo $lieferant->l_firmenname;
+//        $alleLiefer = $lieferantDbAdapter->selectLieferanten();
+//        echo count($alleLiefer);
+//        var_dump($alleLiefer);
+//
+//
+//        foreach($alleLiefer as $lieferant){
+//            echo $lieferant->l_firmenname;
+//        }
+//
+        //TODO functions hinzufügen
+        $rollenCRUD = new RollenDBAdapter(null);
+        $alle = $rollenCRUD->selectRollen();
+        foreach ($alle as $rolle){
+            echo $rolle->ro_bezeichnung;
         }
-    
-//        $benutzer = new Benutzer();
+//        var_dump($alle);
+//            foreach ($alle as $func){
+//                echo "$func->f_bezeichnung <br/>";
+//            }
+
+    //        $benutzer = new Benutzer();
 //        $benutzer->be_id = 2;
 //        $benutzer->be_vorname = "Kevin";
 //        $benutzer->be_nachname = "Kekule";

@@ -69,4 +69,19 @@ class KomponentenartenDBAdapter extends baseDbAdapter
         $komponentenarten->kar_bezeichnung = $row["kar_bezeichnung"];
         return $komponentenarten;
     }
+
+    /**
+     * selektiert eine einzelne Komponente
+     * @param $id int die zu suchende ID
+     * @return KomponentenArten|int;
+     */
+    public function selectKomponentenartById($id){
+        $sql = "SELECT * FROM komponentenarten WHERE kar_id = $id";
+        $allekomponentenarten = $this->execSQL($sql);
+        //TODO erfragen wie ich an den error komme
+        if($allekomponentenarten == -1){
+            return -1;
+        }
+        return($this->getkomponentenartenFromAssocArray($allekomponentenarten[0]));
+    }
 }

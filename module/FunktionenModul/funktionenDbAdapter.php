@@ -5,8 +5,7 @@
  * 26-Jul-2016
  */
 
-require("module/baseDbAdapter.php");
-
+require_once(__DIR__ . "/../baseDbAdapter.php");
 /**
  * CRUD Modul fuer Funktionen
  */
@@ -14,7 +13,7 @@ class funktionenDbAdapter extends baseDbAdapter
 {
      /**
      * Constructer
-     * @param type $user der DB User fuer die Anmeldung an der Datenbank
+     * @param User $user der DB User fuer die Anmeldung an der Datenbank
      */
     function __construct($user) 
         {
@@ -23,7 +22,7 @@ class funktionenDbAdapter extends baseDbAdapter
 
         /**
          * Gibt alle Funktionsarten als Enttiy List zureck die sich in der Datenbank befinden
-         * @return \funktionen
+         * @return array|funktionen
          */
         function getAllFunctionSets()
         {
@@ -48,7 +47,7 @@ class funktionenDbAdapter extends baseDbAdapter
         
         /**
          * Loscht die uebergebne Funktion aus der Datenbank
-         * @param type $funktionen
+         * @param funktionen $funktionen
          */
         function deleteFunctionSetById($funktionen)
         {
@@ -58,7 +57,7 @@ class funktionenDbAdapter extends baseDbAdapter
 
         /**
         * Speichert die uebergebne Funktion, entscheided automatisch ueber Updae oder neuem Insert
-        * @param type $funktionen
+        * @param funktionen $funktionen
         */
         function saveFunctionenSet($funktionen)
         {

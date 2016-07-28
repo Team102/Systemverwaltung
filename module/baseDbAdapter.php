@@ -7,8 +7,7 @@
  * Wird an ubergoerdnete DB-Adapter vererbt
  */
 
-
-require_once ("../database_entities/User.php");
+require_once (__DIR__ . "/../database_entities/User.php");
 //require_once ("database_entities/User.php");
 class baseDbAdapter
 {
