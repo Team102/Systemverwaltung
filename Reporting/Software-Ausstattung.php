@@ -8,7 +8,8 @@ require_once "../header.php";
                 <h2>Software-Ausstattung</h2>
             </div>
             <hr class="trenner">
-            <div class="row">
+            <?php if($_SESSION["Benutzer"] instanceof BenutzerExtra): ?>
+                <div class="row">
                 <div class="col-md-2">
                   <!-- Form um Raum zu suchen -->
                     <form method="post" action="../Reporting/Software-Ausstattung.php">
@@ -51,6 +52,11 @@ require_once "../header.php";
                 </tr>
                 </tbody>
             </table>
+
+            <?php else: ?>
+                <label style="color:red; font-weight: bold;">Sie sind nicht Berechtigt diese Webseite zu benutzen.</label>
+            <?php endif; ?>
+        </div>
     </main>
 <?php
 require_once "../footer.php";

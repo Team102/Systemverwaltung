@@ -77,12 +77,15 @@ if(isset($_POST["btnHinzu"])){
 if(!$bereitsGeladen){
     $lieferantenArray = $dbAdapter->selectLieferanten();
 }
-
 ?>
+
+
+
 <!-- Hauptseite -->
   <main>
     <!-- Container Wrapper -->
       <div class="container">
+
         <!-- Abstand (50px nach oben) -->
           <div class="spacer"></div>
           <!-- Überschrift der Seite -->
@@ -91,9 +94,11 @@ if(!$bereitsGeladen){
               <!-- Sprungmarkennavigation -->
               <p><a class="nav-link" href="#hinzu">Hinzufügen</a> // <a class="nav-link" href="#aend">Ändern</a> // <a class="nav-link" href="#del">Löschen</a></p>
           </div>
+
           <!-- Trennlinie -->
           <!-- Hier eventuell Rechtemäßig abfragen und Ein, oder Ausbleden lassen -->
           <hr class="trenner">
+          <?php if($_SESSION["Benutzer"] instanceof BenutzerExtra && $_SESSION["Benutzer"]->darfAlles): ?>
                 <div class="row">
                   <!-- Mittig Zentriert -->
                     <div class="col-md-8 col-md-offset-2">
@@ -267,6 +272,10 @@ if(!$bereitsGeladen){
                             </form>
                         </div>
                       </div>
+
+            <?php else: ?>
+                <label style="color:red; font-weight: bold;">Sie sind nicht Berechtigt diese Webseite zu benutzen.</label>
+            <?php endif; ?>
             </div>
         </main>
         <!-- Include Footer -->

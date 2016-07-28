@@ -70,6 +70,7 @@ session_start();
                  
                         ?>
                 <hr class="trenner">
+                <?php if($_SESSION["Benutzer"] instanceof BenutzerExtra): ?>
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
                         <h3 id="hinzu">Komponentenart hinzufügen</h3>
@@ -145,6 +146,10 @@ session_start();
                             </form>
                         </div>
                       </div>
+
+                <?php else: ?>
+                    <label style="color:red; font-weight: bold;">Sie sind nicht Berechtigt diese Webseite zu benutzen.</label>
+                <?php endif; ?>
             </div>
         </main>
   <?php
