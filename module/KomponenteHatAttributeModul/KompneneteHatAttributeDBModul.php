@@ -4,9 +4,7 @@
  * Author: Alexander Burcev
  * 27-Jul-2016
  */
-
-require_once("module/baseDbAdapter.php");
-
+require_once(__DIR__ . "/../baseDbAdapter.php");
 
 class KomponenteHatAttributeDbAdapter extends baseDbAdapter
 {

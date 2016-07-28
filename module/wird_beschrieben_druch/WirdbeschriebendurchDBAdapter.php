@@ -6,8 +6,8 @@
  * Date: 25.07.2016
  * Time: 13:37
  */
-require_once("module/baseDbAdapter.php");
-require_once("database_entities/Wird_Beschrieben_Durch");
+require_once(__DIR__ . "/../baseDbAdapter.php");
+require_once(__DIR__ . "/../../database_entities/Wird_Beschrieben_Durch.php");
 class WirdbeschriebendurchDBAdapter extends baseDbAdapter
 {
 
@@ -71,5 +71,26 @@ class WirdbeschriebendurchDBAdapter extends baseDbAdapter
         $wirdBeschriebenDurch->kat_id = $row["kat_id"];
 
         return $wirdBeschriebenDurch;
+    }
+
+    /**
+     * Diese Funktion gibt alle KomponentenAttribute der ID zurück
+     * @return mixed array[KomponentenAttrbibute] oder einer der folgenden Fehlercodes
+     * -1 = Fehler beim ausführen des SQL
+     */
+    function selectKomponentenAttributeFormID( $kar_id ){
+        $sql ="SELECT * FROM Wird_Beschrieben_Durch WHERE kar_id = " . $kar_id;
+        $alleAttributeDerKomponente = $this->execSQL($sql);
+        //TODO erfragen wie ich an den error komme
+        echo bla;
+        if($alleAttributeDerKomponente == -1){
+            return -1;
+        }
+        $KomponentenAttributeArray = array();
+        foreach($alleAttributeDerKomponente as $row){
+            $komponentenattribute = $this->getwirdBeschriebenDurchFromAssocArray($row);
+            $KomponentenAttributeArray[] = $komponentenattribute;
+        }
+        return $KomponentenAttributeArray;
     }
 }

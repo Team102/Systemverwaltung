@@ -6,8 +6,8 @@
  * Date: 25.07.2016
  * Time: 14:08
  */
-require_once("module/baseDbAdapter.php");
-require_once("database_entities/KomponentenAttribute.php");
+require_once(__DIR__ . "/../baseDbAdapter.php");
+require_once(__DIR__ . "/../../database_entities/KomponentenAttribute.php");
 class KomponentenAttributeDBAdapter extends baseDbAdapter
 {
 
@@ -30,6 +30,28 @@ class KomponentenAttributeDBAdapter extends baseDbAdapter
         }
         return $KomponentenAttributeArray;
     }
+
+    /**
+     * Diese Funktion gibt alle KomponentenAttribute der ID zurück
+     * @return mixed array[KomponentenAttrbibute] oder einer der folgenden Fehlercodes
+     * -1 = Fehler beim ausführen des SQL
+     */
+    function selectKomponentenAttributeFormID( $kat_id ){
+        $sql ="SELECT * FROM komponentenattribute WHERE kat_id = " . $kat_id;
+        $alleAttributeDerKomponente = $this->execSQL($sql);
+        //TODO erfragen wie ich an den error komme
+        echo bla;
+        if($alleAttributeDerKomponente == -1){
+            return -1;
+        }
+        $KomponentenAttributeArray = array();
+        foreach($alleAttributeDerKomponente as $row){
+            $komponentenattribute = $this->getKomponentenAttributeFromAssocArray($row);
+            $KomponentenAttributeArray[] = $komponentenattribute;
+        }
+        return $KomponentenAttributeArray;
+    }
+
 
     /**
      * Fügt den KomponentenAttribute hinzu
