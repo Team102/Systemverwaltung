@@ -77,7 +77,7 @@ class KomponentenAttributeDBAdapter extends baseDbAdapter
      * @param $KomponentenAttribute KomponentenAttribute zu löschender KomponentenAttribute
      */
     function deleteKomponentenAttribute($KomponentenAttribute){
-        $this->delete("KomponentenAttribute", "kat_id = $KomponentenAttribute->kat_id");
+        $this->delete("komponentenattribute", "kat_id = $KomponentenAttribute->kat_id");
     }
 
     /**
